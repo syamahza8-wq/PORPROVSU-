@@ -4,8 +4,7 @@ import {
   Search,
   Trophy,
   UserCheck,
-  ShieldCheck,
-  ExternalLink
+  ShieldCheck
 } from 'lucide-react';
 import { Athlete, Coach, MedalStanding } from '../types';
 import { INITIAL_MEDALS } from '../constants/initialData';
@@ -100,11 +99,10 @@ export const AthletesCoachesSection: React.FC<AthletesCoachesSectionProps> = ({
               Data Atlet & Pelatih Resmi
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Data diinput secara resmi oleh masing-masing pengurus KONI Kabupaten / Kota melalui Portal KONI Daerah.
+              Data resmi terintegrasi dari input internal masing-masing pengurus KONI Kabupaten / Kota.
             </p>
           </div>
 
-          {/* Tab Switcher */}
           <div className="flex p-1 bg-white rounded-2xl border border-slate-200 w-full sm:w-auto shadow-2xs">
             <button
               onClick={() => {
@@ -188,31 +186,20 @@ export const AthletesCoachesSection: React.FC<AthletesCoachesSectionProps> = ({
           </div>
         </div>
 
-        {/* TAB 1: ATHLETES DIRECTORY OR CLEAN EMPTY STATE */}
+        {/* TAB 1: ATHLETES DIRECTORY OR CLEAN EMPTY STATE (Zero KONI Login Links!) */}
         {activeTab === 'athletes' && (
           <>
             {filteredAthletes.length === 0 ? (
-              <div className="bg-white rounded-3xl border-2 border-dashed border-slate-300 p-8 sm:p-12 text-center max-w-2xl mx-auto space-y-4">
+              <div className="bg-white rounded-3xl border-2 border-dashed border-slate-300 p-8 sm:p-12 text-center max-w-2xl mx-auto space-y-3">
                 <div className="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-200 text-brand-gold flex items-center justify-center mx-auto">
                   <ShieldCheck className="w-8 h-8" />
                 </div>
-                <div className="space-y-1.5">
-                  <h3 className="text-lg sm:text-xl font-black text-brand-dark">
-                    Belum Ada Data Atlet Terdaftar
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    Data atlet saat ini masih kosong. Penginputan data atlet hanya dapat dilakukan secara resmi oleh masing-masing <strong>KONI Kabupaten / Kota</strong> di portal terpisah.
-                  </p>
-                </div>
-                <div className="pt-2">
-                  <a
-                    href="./koni-daerah/"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-gold hover:bg-brand-gold-dark text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-sm transition-all"
-                  >
-                    <span>Input Data via Portal KONI Kab/Kota</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
+                <h3 className="text-lg sm:text-xl font-black text-brand-dark">
+                  Belum Ada Data Atlet Terdaftar
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  Data atlet saat ini masih kosong. Penginputan data atlet bersifat internal dan hanya dilakukan oleh pengurus resmi <strong>KONI Kabupaten / Kota</strong> masing-masing.
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -299,27 +286,16 @@ export const AthletesCoachesSection: React.FC<AthletesCoachesSectionProps> = ({
         {activeTab === 'coaches' && (
           <>
             {filteredCoaches.length === 0 ? (
-              <div className="bg-white rounded-3xl border-2 border-dashed border-slate-300 p-8 sm:p-12 text-center max-w-2xl mx-auto space-y-4">
+              <div className="bg-white rounded-3xl border-2 border-dashed border-slate-300 p-8 sm:p-12 text-center max-w-2xl mx-auto space-y-3">
                 <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-200 text-brand-royal flex items-center justify-center mx-auto">
                   <UserCheck className="w-8 h-8" />
                 </div>
-                <div className="space-y-1.5">
-                  <h3 className="text-lg sm:text-xl font-black text-brand-dark">
-                    Belum Ada Data Pelatih Terdaftar
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    Data pelatih cabang olahraga hanya dapat didaftarkan oleh masing-masing <strong>KONI Kabupaten / Kota</strong> melalui Portal KONI Daerah.
-                  </p>
-                </div>
-                <div className="pt-2">
-                  <a
-                    href="./koni-daerah/"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-royal hover:bg-brand-dark text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-sm transition-all"
-                  >
-                    <span>Input Pelatih via Portal KONI Kab/Kota</span>
-                    <ExternalLink className="w-4 h-4 text-brand-gold-light" />
-                  </a>
-                </div>
+                <h3 className="text-lg sm:text-xl font-black text-brand-dark">
+                  Belum Ada Data Pelatih Terdaftar
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  Data pelatih cabang olahraga hanya didaftarkan secara internal oleh masing-masing pengurus <strong>KONI Kabupaten / Kota</strong>.
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">

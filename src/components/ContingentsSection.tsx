@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, Search, ExternalLink } from 'lucide-react';
+import { Users, Search } from 'lucide-react';
 import { MedalStanding, Athlete } from '../types';
 import { DistrictEmblem } from './DistrictEmblem';
 
@@ -52,7 +52,7 @@ export const ContingentsSection: React.FC<ContingentsSectionProps> = ({
               33 Kontingen Kabupaten & Kota
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Logo daerah seluruh peserta PORPROVSU XII Sumatera Utara. Masing-masing KONI dapat menginput atlet di portal KONI Daerah.
+              Logo resmi masing-masing daerah peserta PORPROVSU XII Sumatera Utara beserta jumlah atlet dan cabang olahraga diikuti.
             </p>
           </div>
 
@@ -82,26 +82,16 @@ export const ContingentsSection: React.FC<ContingentsSectionProps> = ({
                   name={item.name}
                 />
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-                      KONI {item.code}
-                    </span>
-                    <a
-                      href={`./koni-daerah/?kab=${encodeURIComponent(item.code)}`}
-                      className="text-[10px] font-bold text-brand-royal hover:text-brand-gold flex items-center gap-0.5"
-                      title={`Portal KONI ${item.name}`}
-                    >
-                      <span>Portal</span>
-                      <ExternalLink className="w-2.5 h-2.5" />
-                    </a>
-                  </div>
+                  <span className="inline-block text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded mb-1">
+                    {item.code}
+                  </span>
                   <h3 className="font-bold text-sm text-slate-900 line-clamp-1">{item.name}</h3>
                 </div>
               </div>
 
               <div className="pt-3 mt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-center text-xs">
                 <div className="bg-slate-50 p-1.5 rounded-lg">
-                  <span className="text-[10px] text-slate-400 block font-semibold">Atlet Terinput</span>
+                  <span className="text-[10px] text-slate-400 block font-semibold">Atlet Terdaftar</span>
                   <span className="font-bold text-slate-800">{item.athletesCount}</span>
                 </div>
                 <div className="bg-slate-50 p-1.5 rounded-lg">

@@ -5,18 +5,15 @@ import {
   Mail,
   Globe,
   ShieldCheck,
-  ChevronRight,
-  ExternalLink
+  ChevronRight
 } from 'lucide-react';
 import { ASSETS } from '../assets';
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
-  onOpenAdmin: () => void;
-  onOpenLogin: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
     <footer className="bg-slate-100 text-slate-700 border-t border-slate-200 pt-14 pb-24 md:pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
           {/* Quick Navigation */}
           <div className="lg:col-span-3 space-y-4">
             <h4 className="text-xs font-extrabold uppercase tracking-wider text-brand-dark border-l-2 border-brand-gold pl-2">
-              Navigasi Halaman
+              Navigasi Informasi
             </h4>
             <ul className="space-y-2 text-xs font-semibold text-slate-600">
               <li>
@@ -82,7 +79,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
               <li>
                 <button onClick={() => onNavigate('cabor')} className="hover:text-brand-royal flex items-center gap-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>28 Cabang Olahraga</span>
+                  <span>30 Cabang Olahraga</span>
                 </button>
               </li>
               <li>
@@ -98,9 +95,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('form-portal')} className="hover:text-brand-royal flex items-center gap-1.5">
+                <button onClick={() => onNavigate('berita')} className="hover:text-brand-royal flex items-center gap-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>Portal KONI Daerah</span>
+                  <span>Berita & Liputan</span>
                 </button>
               </li>
             </ul>
@@ -109,7 +106,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
           {/* Sekretariat & Kontak */}
           <div className="lg:col-span-4 space-y-4">
             <h4 className="text-xs font-extrabold uppercase tracking-wider text-brand-dark border-l-2 border-brand-gold pl-2">
-              Sekretariat & Akses KONI Daerah
+              Sekretariat Penyelenggara
             </h4>
 
             <div className="space-y-2.5 text-xs text-slate-600">
@@ -134,25 +131,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
                 <Globe className="w-4 h-4 text-brand-gold shrink-0" />
                 <span>www.porprovsu.com</span>
               </div>
-            </div>
-
-            <div className="pt-2 flex flex-col gap-2">
-              <a
-                href="./koni-daerah/"
-                className="w-full py-2.5 px-3 rounded-xl bg-brand-gold hover:bg-brand-gold-dark text-white font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-2xs"
-              >
-                <ShieldCheck className="w-4 h-4" />
-                <span>Masuk Portal Input KONI Kab/Kota</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-
-              <button
-                onClick={onOpenAdmin}
-                className="w-full py-2.5 px-3 rounded-xl bg-brand-royal hover:bg-brand-dark text-white font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-2xs"
-              >
-                <span>Kelola Database Firestore</span>
-                <ChevronRight className="w-4 h-4 text-brand-gold-light" />
-              </button>
             </div>
           </div>
         </div>

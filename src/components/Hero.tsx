@@ -7,7 +7,7 @@ import {
   UserCheck,
   Activity,
   ShieldCheck,
-  ExternalLink
+  ChevronRight
 } from 'lucide-react';
 import { ASSETS } from '../assets';
 
@@ -51,9 +51,15 @@ export const Hero: React.FC<HeroProps> = ({
     return () => clearInterval(interval);
   }, []);
 
+  const hostClusters = [
+    { city: 'Kota Medan', desc: 'Kolam Renang Selayang, Taman Cadika, GOR Mini Dispora' },
+    { city: 'Kab. Deli Serdang', desc: 'Stadion Utama & Madya Sumut Batang Kuis, GSG Pancing' },
+    { city: 'Kota Binjai', desc: 'GOR Baru Jl. Danau Puso Km 18 & GOR Rambung' },
+    { city: 'Kota Pematangsiantar', desc: 'GOR Suzuya Merdeka Mall, Hotel Manna, Pelita VC' },
+  ];
+
   return (
     <section className="relative bg-white text-brand-dark overflow-hidden border-b border-slate-200">
-      {/* Subtle Clean Official Top Accent Strip (No neon) */}
       <div className="h-1.5 w-full flex">
         <div className="w-1/3 bg-brand-royal" />
         <div className="w-1/3 bg-brand-gold" />
@@ -62,14 +68,13 @@ export const Hero: React.FC<HeroProps> = ({
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-          {/* Left Column: Bright Official Heading, Logo, CTAs */}
+          {/* Left Column */}
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm font-bold tracking-wide uppercase shadow-2xs">
               <Flame className="w-4 h-4 text-brand-gold" />
               <span>Pekan Olahraga Provinsi Sumatera Utara</span>
             </div>
 
-            {/* Logo & Main Heading Row */}
             <div className="flex flex-col sm:flex-row items-center lg:items-start gap-4">
               <div className="w-20 h-20 sm:w-24 sm:h-24 p-2 rounded-2xl bg-white border-2 border-slate-200 shadow-sm shrink-0 flex items-center justify-center">
                 <img
@@ -94,10 +99,10 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
 
             <p className="text-xs sm:text-base text-slate-600 max-w-2xl leading-relaxed mx-auto lg:mx-0">
-              Portal data terpadu PORPROVSU Sumatera Utara berbasis Firebase Cloud Firestore. Jelajahi data atlet & pelatih, medali perseorangan, lokasi cabang olahraga, jadwal tanding, serta portal resmi KONI Kabupaten/Kota.
+              Portal informasi publik resmi Pekan Olahraga Provinsi Sumatera Utara berbasis Firebase Cloud Firestore. Pantau jadwal pertandingan, daftar 30 cabang olahraga resmi, lokasi venue, serta kontingen 33 kabupaten/kota.
             </p>
 
-            {/* Action Buttons */}
+            {/* Action Buttons (Pure Public Navigation) */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
               <button
                 onClick={() => onNavigate('atlet-pelatih')}
@@ -115,14 +120,13 @@ export const Hero: React.FC<HeroProps> = ({
                 <span>Lokasi & Cabor</span>
               </button>
 
-              <a
-                href="./koni-daerah/"
+              <button
+                onClick={() => onNavigate('jadwal')}
                 className="flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold text-xs sm:text-sm transition-all active:scale-95"
               >
-                <ShieldCheck className="w-4 h-4 text-brand-royal" />
-                <span>Portal Input KONI Kab/Kota</span>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
-              </a>
+                <Calendar className="w-4 h-4 text-brand-royal" />
+                <span>Jadwal Pertandingan</span>
+              </button>
             </div>
 
             {/* Quick Access Menu Cards */}
@@ -143,7 +147,7 @@ export const Hero: React.FC<HeroProps> = ({
                 className="p-3 rounded-2xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-left transition-all"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xl sm:text-2xl font-black text-brand-royal">28</span>
+                  <span className="text-xl sm:text-2xl font-black text-brand-royal">30</span>
                   <Activity className="w-4 h-4 text-brand-royal" />
                 </div>
                 <div className="text-[11px] text-slate-700 font-bold mt-0.5">Cabang Olahraga</div>
@@ -154,10 +158,10 @@ export const Hero: React.FC<HeroProps> = ({
                 className="p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-left transition-all"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xl sm:text-2xl font-black text-emerald-700">{athletesCount}+</span>
+                  <span className="text-xl sm:text-2xl font-black text-emerald-700">{athletesCount}</span>
                   <UserCheck className="w-4 h-4 text-emerald-700" />
                 </div>
-                <div className="text-[11px] text-slate-700 font-bold mt-0.5">Atlet & {coachesCount}+ Pelatih</div>
+                <div className="text-[11px] text-slate-700 font-bold mt-0.5">Atlet & {coachesCount} Pelatih</div>
               </button>
 
               <button
@@ -165,27 +169,26 @@ export const Hero: React.FC<HeroProps> = ({
                 className="p-3 rounded-2xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-left transition-all"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xl sm:text-2xl font-black text-brand-maroon">6+</span>
+                  <span className="text-xl sm:text-2xl font-black text-brand-maroon">10</span>
                   <MapPin className="w-4 h-4 text-brand-maroon" />
                 </div>
-                <div className="text-[11px] text-slate-700 font-bold mt-0.5">Lokasi & Arena</div>
+                <div className="text-[11px] text-slate-700 font-bold mt-0.5">Venue Resmi</div>
               </button>
             </div>
           </div>
 
-          {/* Right Column: Bright Countdown & Portal KONI Daerah Card */}
+          {/* Right Column: Bright Countdown & 4 Host Clusters */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Official Countdown Box */}
             <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
               <div className="flex items-center justify-between pb-3 border-b border-slate-200">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-brand-gold" />
                   <span className="text-xs font-extrabold uppercase tracking-wider text-slate-800">
-                    Jadwal Penyelenggaraan
+                    Jadwal Penyelenggaraan (1–9 Des)
                   </span>
                 </div>
                 <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                  LIVE AKTIF
+                  RESMI
                 </span>
               </div>
 
@@ -209,33 +212,35 @@ export const Hero: React.FC<HeroProps> = ({
               </div>
             </div>
 
-            {/* Dedicated Card: Portal Khusus KONI Kab/Kota */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-amber-50/70 border-2 border-amber-200 shadow-sm space-y-3">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-brand-gold text-white shrink-0">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-900 block">
-                    Portal Terpisah Per Daerah
+            {/* 4 Klaster Tuan Rumah Card */}
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-brand-gold" />
+                  <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-brand-dark">
+                    4 Wilayah Tuan Rumah Venue
                   </span>
-                  <h3 className="font-black text-base text-brand-dark">
-                    Pendaftaran & Input Data Atlet KONI
-                  </h3>
                 </div>
+                <button
+                  onClick={() => onNavigate('venue')}
+                  className="text-xs font-bold text-brand-royal hover:text-brand-gold flex items-center gap-0.5"
+                >
+                  <span>Detail Lokasi</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
               </div>
 
-              <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                Penginputan data atlet & pelatih dibatasi khusus untuk masing-masing pengurus <strong>KONI Kabupaten / Kota</strong> di folder portal khusus agar data resmi terjaga validitasnya.
-              </p>
-
-              <a
-                href="./koni-daerah/"
-                className="w-full py-3 px-4 rounded-xl bg-brand-royal hover:bg-brand-dark text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xs"
-              >
-                <span>Masuk ke Portal KONI Kab/Kota</span>
-                <ExternalLink className="w-4 h-4 text-brand-gold-light" />
-              </a>
+              <div className="space-y-2">
+                {hostClusters.map((h) => (
+                  <div
+                    key={h.city}
+                    className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80"
+                  >
+                    <p className="text-xs font-extrabold text-brand-royal">{h.city}</p>
+                    <p className="text-[11px] text-slate-600 line-clamp-1">{h.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

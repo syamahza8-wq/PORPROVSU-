@@ -4,7 +4,7 @@ import {
   Home,
   MapPin,
   Calendar,
-  ShieldCheck
+  Newspaper
 } from 'lucide-react';
 
 interface MobileBottomNavProps {
@@ -21,6 +21,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
     { id: 'atlet-pelatih', label: 'Atlet', icon: Users },
     { id: 'venue', label: 'Lokasi', icon: MapPin },
     { id: 'jadwal', label: 'Jadwal', icon: Calendar },
+    { id: 'berita', label: 'Berita', icon: Newspaper },
   ];
 
   return (
@@ -48,19 +49,6 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             </button>
           );
         })}
-
-        {/* Direct Link to Separate KONI Kab/Kota Portal */}
-        <a
-          href="./koni-daerah/"
-          className="flex flex-col items-center justify-center py-1 px-1 rounded-xl text-amber-900 font-extrabold min-w-0"
-        >
-          <div className="p-1 rounded-lg bg-brand-gold text-white">
-            <ShieldCheck className="w-4 h-4" />
-          </div>
-          <span className="text-[10px] mt-0.5 tracking-tight whitespace-nowrap truncate max-w-full">
-            KONI
-          </span>
-        </a>
       </div>
     </div>
   );

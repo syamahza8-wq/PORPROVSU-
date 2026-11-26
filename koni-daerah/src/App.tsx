@@ -120,15 +120,15 @@ export const App: React.FC = () => {
     e.preventDefault();
     setLoginError(null);
     if (!pinInput.trim()) {
-      setLoginError('Masukkan Password / Kode Akses KONI Kabupaten/Kota (Demo: koni2026).');
+      setLoginError('Masukkan Password / Kode Akses resmi KONI Kabupaten/Kota Anda.');
       return;
     }
 
-    // Valid demo password: koni2026 or <regionCode>2026
     const lowerPin = pinInput.trim().toLowerCase();
     const expectedCodePin = `${selectedDistrict.regionCode.toLowerCase()}2026`;
-    if (lowerPin !== 'koni2026' && lowerPin !== expectedCodePin && lowerPin.length < 4) {
-      setLoginError(`Password salah. Gunakan "koni2026" atau "${expectedCodePin}".`);
+    const altCodePin = `koni_${selectedDistrict.regionCode.toLowerCase()}_2026`;
+    if (lowerPin !== expectedCodePin && lowerPin !== altCodePin) {
+      setLoginError('Kode akses / password daerah tidak sesuai. Hubungi Sekretariat KONI Sumut.');
       return;
     }
 
@@ -338,14 +338,8 @@ export const App: React.FC = () => {
             </form>
 
             <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-[11px] text-amber-900">
-              <strong className="block">ℹ️ Keamanan Data Wilayah:</strong>
-              Setiap pengurus KONI hanya dapat menginput dan mengelola atlet milik Kabupaten/Kota mereka masing-masing.
-              <div className="mt-1 font-bold">
-                Password Demo: <code className="bg-white px-1.5 py-0.5 rounded">koni2026</code> atau{' '}
-                <code className="bg-white px-1.5 py-0.5 rounded">
-                  {selectedDistrict.regionCode.toLowerCase()}2026
-                </code>
-              </div>
+              <strong className="block">ℹ️ Keamanan Akses Wilayah:</strong>
+              Portal ini hanya diperuntukkan bagi pengurus resmi KONI Kabupaten/Kota dengan kode akses daerah masing-masing.
             </div>
           </div>
         </div>

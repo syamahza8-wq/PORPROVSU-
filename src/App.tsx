@@ -7,13 +7,10 @@ import { MatchScheduleSection } from './components/MatchSchedule';
 import { SportsBranches } from './components/SportsBranches';
 import { VenuesSection } from './components/VenuesSection';
 import { ContingentsSection } from './components/ContingentsSection';
-import { OfficialFormSection } from './components/OfficialFormSection';
 import { NewsSection } from './components/NewsSection';
 import { Footer } from './components/Footer';
-import { AdminModal } from './components/AdminModal';
 import { IntroLoader } from './components/IntroLoader';
 import { DeveloperNoticeModal } from './components/DeveloperNoticeModal';
-import { LoginModal } from './components/LoginModal';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import {
   subscribeToMedals,
@@ -35,21 +32,9 @@ export const App: React.FC = () => {
   // 3-second Intro Loading State (Strictly 3s, no skip)
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isNoticeOpen, setIsNoticeOpen] = useState<boolean>(false);
-  const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
-  const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
-
-  const [currentUser, setCurrentUser] = useState<{ name: string; role: string } | null>(() => {
-    try {
-      const saved = localStorage.getItem('porprovsu_user');
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
-    }
-  });
-
   const [activeSection, setActiveSection] = useState<string>('beranda');
 
-  // Real-time Firestore state
+  // Real-time Firestore state (Read-only on public portal)
   const [medals, setMedals] = useState<MedalStanding[]>(INITIAL_MEDALS);
   const [schedules, setSchedules] = useState<MatchSchedule[]>(INITIAL_SCHEDULES);
   const [news, setNews] = useState<NewsArticle[]>(INITIAL_NEWS);
@@ -77,16 +62,6 @@ export const App: React.FC = () => {
     setIsNoticeOpen(true);
   };
 
-  const handleLoginSuccess = (user: { name: string; role: string }) => {
-    setCurrentUser(user);
-    setIsAdminOpen(true);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('porprovsu_user');
-    setCurrentUser(null);
-  };
-
   const handleNavigate = (sectionId: string) => {
     setActiveSection(sectionId);
     if (sectionId === 'beranda') {
@@ -108,15 +83,11 @@ export const App: React.FC = () => {
       {/* 1. Running Ticker */}
       <RunningTicker schedules={schedules} />
 
-      {/* 2. Clean 2-Tier Sticky Header */}
+      {/* 2. Clean 2-Tier Public Header (Zero Login/Admin Buttons) */}
       <Navbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
-        onOpenAdmin={() => setIsAdminOpen(true)}
         onOpenDeveloperNotice={() => setIsNoticeOpen(true)}
-        onOpenLogin={() => setIsLoginOpen(true)}
-        currentUser={currentUser}
-        onLogout={handleLogout}
       />
 
       {/* Main Content */}
@@ -129,7 +100,7 @@ export const App: React.FC = () => {
           />
         </div>
 
-        {/* Data Atlet & Pelatih (kosong secara default; hanya diisi lewat portal KONI Kab/Kota) */}
+        {/* Data Atlet & Pelatih */}
         <AthletesCoachesSection
           athletes={athletes}
           coaches={coaches}
@@ -148,39 +119,20 @@ export const App: React.FC = () => {
         {/* 33 Kabupaten & Kota + Logo Daerah */}
         <ContingentsSection medals={medals} athletes={athletes} />
 
-        {/* Form Akses Portal KONI Kab/Kota dengan Background Foto Kadis */}
-        <OfficialFormSection athletes={athletes} />
-
         {/* Berita & Informasi Resmi */}
         <NewsSection news={news} />
       </main>
 
-      <Footer
-        onNavigate={handleNavigate}
-        onOpenAdmin={() => setIsAdminOpen(true)}
-        onOpenLogin={() => setIsLoginOpen(true)}
-      />
+      <Footer onNavigate={handleNavigate} />
 
       <MobileBottomNav
         activeSection={activeSection}
         onNavigate={handleNavigate}
       />
 
-      <AdminModal
-        isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
-        schedules={schedules}
-      />
-
       <DeveloperNoticeModal
         isOpen={isNoticeOpen}
         onClose={() => setIsNoticeOpen(false)}
-      />
-
-      <LoginModal
-        isOpen={isLoginOpen}
-        onClose={() => setIsLoginOpen(false)}
-        onLoginSuccess={handleLoginSuccess}
       />
     </div>
   );
