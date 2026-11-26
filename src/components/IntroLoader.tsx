@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Flame, ShieldCheck } from 'lucide-react';
+import { ASSETS } from '../assets';
 
 interface IntroLoaderProps {
   onComplete: () => void;
@@ -59,11 +60,12 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
         {/* Logo Container */}
         <div className="relative w-24 h-24 sm:w-28 sm:h-28 p-2 rounded-2xl bg-white border-2 border-brand-gold shadow-2xl flex items-center justify-center">
           <img 
-            src="/assets/logo.png" 
+            src={ASSETS.logo} 
             alt="Logo PORPROVSU" 
             className="w-full h-full object-contain animate-pulse"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = '/assets/logo.jpeg';
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = ASSETS.logoJpeg;
             }}
           />
         </div>

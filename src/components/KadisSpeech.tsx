@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShieldCheck, Award, Quote, CheckCircle2 } from 'lucide-react';
 import { KADIS_PROFILE } from '../constants/initialData';
+import { ASSETS } from '../assets';
 
 export const KadisSpeech: React.FC = () => {
   return (
@@ -16,20 +17,20 @@ export const KadisSpeech: React.FC = () => {
           <h2 className="text-2xl sm:text-4xl font-extrabold text-brand-dark tracking-tight">
             Sambutan Resmi Kepala Dinas Pemuda dan Olahraga
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-600">
+          <p className="mt-2 text-xs sm:text-sm text-slate-600">
             Dinas Pemuda dan Olahraga (DISPORA) Provinsi Sumatera Utara
           </p>
         </div>
 
         {/* Feature Container with kadis image prominently highlighted */}
-        <div className="bg-slate-50 rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden">
+        <div className="bg-slate-50 rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 lg:p-12">
             
             {/* Left: Kadis Official Portrait Frame */}
             <div className="lg:col-span-5 flex flex-col items-center">
               <div className="relative w-full max-w-md rounded-2xl overflow-hidden shadow-md border-4 border-white bg-slate-900 group">
                 <img 
-                  src="/assets/kadis.jpeg" 
+                  src={ASSETS.kadis} 
                   alt="Kepala Dinas Pemuda dan Olahraga Sumatera Utara" 
                   className="w-full h-auto object-cover group-hover:scale-102 transition-transform duration-500"
                 />
@@ -38,14 +39,14 @@ export const KadisSpeech: React.FC = () => {
                 <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-brand-dark via-brand-dark/90 to-transparent p-4 sm:p-5 text-white">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="w-2.5 h-2.5 rounded-full bg-brand-gold"></span>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-brand-gold-light">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-brand-gold-light">
                       DISPORA PROVINSI SUMATERA UTARA
                     </span>
                   </div>
-                  <h3 className="font-bold text-base sm:text-lg leading-snug">
+                  <h3 className="font-extrabold text-sm sm:text-base leading-snug">
                     {KADIS_PROFILE.name}
                   </h3>
-                  <p className="text-xs text-slate-300 mt-0.5">
+                  <p className="text-[11px] text-slate-300 mt-0.5">
                     Pemerintah Provinsi Sumatera Utara
                   </p>
                 </div>
@@ -59,10 +60,10 @@ export const KadisSpeech: React.FC = () => {
             </div>
 
             {/* Right: Official Address Text */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-5">
               
-              <div className="space-y-2">
-                <span className="text-sm font-bold text-brand-gold uppercase tracking-wider">
+              <div className="space-y-1.5">
+                <span className="text-xs font-bold text-brand-gold uppercase tracking-wider">
                   Amanat Pembukaan & Semangat Kompetisi
                 </span>
                 <p className="text-base sm:text-lg font-bold text-brand-royal italic">
@@ -70,8 +71,8 @@ export const KadisSpeech: React.FC = () => {
                 </p>
               </div>
 
-              <div className="relative pl-6 border-l-4 border-brand-gold space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed">
-                <Quote className="w-8 h-8 text-brand-gold/20 absolute -top-4 -left-3" />
+              <div className="relative pl-6 border-l-4 border-brand-gold space-y-3.5 text-slate-700 text-xs sm:text-sm leading-relaxed">
+                <Quote className="w-7 h-7 text-brand-gold/25 absolute -top-3.5 -left-2.5" />
                 <p>
                   {KADIS_PROFILE.speechBody}
                 </p>
@@ -81,15 +82,15 @@ export const KadisSpeech: React.FC = () => {
               </div>
 
               {/* Motto Box */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-brand-royal text-white flex items-start gap-4 shadow-sm">
+              <div className="p-4 sm:p-5 rounded-2xl bg-brand-royal text-white flex items-start gap-4 shadow-xs">
                 <div className="p-2.5 rounded-xl bg-brand-gold text-slate-950 shrink-0">
-                  <Award className="w-6 h-6" />
+                  <Award className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-brand-gold-light uppercase tracking-wide">
+                  <h4 className="text-xs font-bold text-brand-gold-light uppercase tracking-wide">
                     Motto Porprovsu Sumatera Utara
                   </h4>
-                  <p className="text-sm sm:text-base font-semibold mt-0.5 text-slate-100">
+                  <p className="text-xs sm:text-sm font-semibold mt-0.5 text-slate-100">
                     {KADIS_PROFILE.motto}
                   </p>
                 </div>

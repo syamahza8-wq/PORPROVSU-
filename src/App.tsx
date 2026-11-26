@@ -13,6 +13,7 @@ import { Footer } from './components/Footer';
 import { AdminModal } from './components/AdminModal';
 import { IntroLoader } from './components/IntroLoader';
 import { DeveloperNoticeModal } from './components/DeveloperNoticeModal';
+import { LoginModal } from './components/LoginModal';
 import { 
   subscribeToMedals, 
   subscribeToSchedules, 
@@ -26,9 +27,21 @@ export const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // Developer notice modal state
   const [isNoticeOpen, setIsNoticeOpen] = useState<boolean>(false);
+  // Admin & Login state
+  const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
+  const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
+  
+  // Current logged in user (from localStorage if exists)
+  const [currentUser, setCurrentUser] = useState<{ name: string; role: string } | null>(() => {
+    try {
+      const saved = localStorage.getItem('porprovsu_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
 
   const [activeSection, setActiveSection] = useState<string>('beranda');
-  const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
 
   // Real-time Firestore state
   const [medals, setMedals] = useState<MedalStanding[]>(INITIAL_MEDALS);
@@ -64,6 +77,17 @@ export const App: React.FC = () => {
     setIsNoticeOpen(true);
   };
 
+  const handleLoginSuccess = (user: { name: string; role: string }) => {
+    setCurrentUser(user);
+    // After login, automatically open admin panel for instant control
+    setIsAdminOpen(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('porprovsu_user');
+    setCurrentUser(null);
+  };
+
   const handleNavigate = (sectionId: string) => {
     setActiveSection(sectionId);
     if (sectionId === 'beranda') {
@@ -94,6 +118,9 @@ export const App: React.FC = () => {
         onNavigate={handleNavigate}
         onOpenAdmin={() => setIsAdminOpen(true)}
         onOpenDeveloperNotice={() => setIsNoticeOpen(true)}
+        onOpenLogin={() => setIsLoginOpen(true)}
+        currentUser={currentUser}
+        onLogout={handleLogout}
       />
 
       {/* Main Content Area */}
@@ -134,6 +161,7 @@ export const App: React.FC = () => {
       <Footer 
         onNavigate={handleNavigate}
         onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenLogin={() => setIsLoginOpen(true)}
       />
 
       {/* 12. Modal Admin & Firestore Management */}
@@ -148,6 +176,13 @@ export const App: React.FC = () => {
       <DeveloperNoticeModal
         isOpen={isNoticeOpen}
         onClose={() => setIsNoticeOpen(false)}
+      />
+
+      {/* 14. Modal Form Login Panitia & Wasit */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
       />
 
     </div>

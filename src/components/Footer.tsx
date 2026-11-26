@@ -6,16 +6,19 @@ import {
   Mail, 
   Globe, 
   ShieldCheck, 
-  ExternalLink,
-  ChevronRight
+  ExternalLink, 
+  ChevronRight,
+  LogIn
 } from 'lucide-react';
+import { ASSETS } from '../assets';
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
   onOpenAdmin: () => void;
+  onOpenLogin: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin, onOpenLogin }) => {
   return (
     <footer className="bg-brand-dark text-slate-300 border-t border-slate-800 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,11 +31,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
             <div className="flex items-center gap-3">
               <div className="w-14 h-14 bg-white p-1 rounded-2xl flex items-center justify-center border border-slate-700 shadow-sm">
                 <img 
-                  src="/assets/logo.png" 
+                  src={ASSETS.logo} 
                   alt="Logo Porprovsu" 
                   className="w-full h-full object-contain"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/assets/logo.jpeg';
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = ASSETS.logoJpeg;
                   }}
                 />
               </div>
@@ -52,7 +56,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
 
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs text-brand-gold-light font-bold">
               <ShieldCheck className="w-4 h-4 text-brand-gold" />
-              <span>Portal Resmi Resmi Berbasis Cloud Firestore</span>
+              <span>Portal Resmi Berbasis Cloud Firestore</span>
             </div>
           </div>
 
@@ -143,13 +147,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
               </div>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-2 flex flex-col gap-2">
+              <button
+                onClick={onOpenLogin}
+                className="w-full py-2.5 px-3 rounded-xl border border-slate-700 bg-slate-900/90 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
+              >
+                <LogIn className="w-4 h-4 text-brand-royal" />
+                <span>Login Akun Panitia / Wasit</span>
+              </button>
+
               <button
                 onClick={onOpenAdmin}
-                className="w-full py-2.5 px-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-brand-gold text-white font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-3 rounded-xl bg-brand-royal border border-slate-700 hover:bg-brand-dark text-white font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
               >
                 <span>Kelola Database Firestore (Panitia)</span>
-                <ChevronRight className="w-4 h-4 text-brand-gold" />
+                <ChevronRight className="w-4 h-4 text-brand-gold-light" />
               </button>
             </div>
           </div>

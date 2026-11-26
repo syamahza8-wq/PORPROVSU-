@@ -10,6 +10,7 @@ import {
   Sparkles 
 } from 'lucide-react';
 import { MedalStanding } from '../types';
+import { ASSETS } from '../assets';
 
 interface HeroProps {
   topMedals: MedalStanding[];
@@ -49,26 +50,26 @@ export const Hero: React.FC<HeroProps> = ({ topMedals, onNavigate }) => {
   }, []);
 
   return (
-    <section className="relative bg-brand-dark text-white overflow-hidden">
+    <section className="relative bg-brand-dark text-white overflow-hidden min-h-[580px] flex items-center">
       
       {/* Background Image: kadis.jpeg with solid elegant dark tint (NO NEON) */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-105"
-        style={{ backgroundImage: `url('/assets/kadis.jpeg')` }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-102"
+        style={{ backgroundImage: `url(${ASSETS.kadis})` }}
       >
         {/* Authoritative deep dark overlay to ensure maximum readability and zero neon effect */}
         <div className="absolute inset-0 bg-brand-dark/85 backdrop-blur-[1px] mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/75 to-brand-dark/60" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
           {/* Left Column: Heading, Badges, CTAs */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             
             {/* Tag badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-royal border border-slate-700/80 text-brand-gold-light text-xs sm:text-sm font-semibold tracking-wide uppercase">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-royal/90 border border-slate-700/80 text-brand-gold-light text-xs sm:text-sm font-bold tracking-wide uppercase shadow-sm">
               <Flame className="w-4 h-4 text-brand-gold-light" />
               <span>Pekan Olahraga Provinsi Sumatera Utara</span>
             </div>
@@ -78,12 +79,12 @@ export const Hero: React.FC<HeroProps> = ({ topMedals, onNavigate }) => {
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white">
                 PORPROVSU <span className="text-brand-gold-light">XII 2026</span>
               </h1>
-              <p className="text-lg sm:text-2xl font-bold text-slate-200">
+              <p className="text-lg sm:text-2xl font-extrabold text-slate-100">
                 “Bersatu Juara, Menembus Prestasi Emas Sumatera Utara”
               </p>
             </div>
 
-            <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-base text-slate-200 max-w-2xl leading-relaxed">
               Portal data terintegrasi Pekan Olahraga Provinsi Sumatera Utara. Pantau klasemen perolehan medali, hasil pertandingan langsung (live score), dan jadwal resmi dari seluruh 33 kontingen kabupaten/kota se-Sumut.
             </p>
 
@@ -91,15 +92,15 @@ export const Hero: React.FC<HeroProps> = ({ topMedals, onNavigate }) => {
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
               <button
                 onClick={() => onNavigate('klasemen')}
-                className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-brand-gold hover:bg-brand-gold-dark text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all active:scale-95"
+                className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-brand-gold hover:bg-brand-gold-dark text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all active:scale-95"
               >
-                <Trophy className="w-5 h-5" />
+                <Trophy className="w-5 h-5 text-white" />
                 <span>Lihat Klasemen Medali</span>
               </button>
 
               <button
                 onClick={() => onNavigate('jadwal')}
-                className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-brand-navy hover:bg-brand-royal text-slate-100 border border-slate-700 font-bold text-sm sm:text-base hover:border-slate-500 transition-all active:scale-95"
+                className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-100 border border-slate-700 font-bold text-xs sm:text-sm hover:border-slate-500 transition-all active:scale-95"
               >
                 <Calendar className="w-5 h-5 text-brand-gold-light" />
                 <span>Jadwal & Skor Pertandingan</span>
@@ -107,22 +108,22 @@ export const Hero: React.FC<HeroProps> = ({ topMedals, onNavigate }) => {
             </div>
 
             {/* Quick Stats Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-slate-800">
-              <div className="p-3 rounded-lg bg-slate-900/70 border border-slate-800">
-                <div className="text-2xl sm:text-3xl font-extrabold text-brand-gold-light">33</div>
-                <div className="text-[11px] sm:text-xs text-slate-400 font-medium uppercase mt-0.5">Kabupaten / Kota</div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-slate-800/80">
+              <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 backdrop-blur-xs">
+                <div className="text-2xl sm:text-3xl font-black text-brand-gold-light">33</div>
+                <div className="text-[10px] sm:text-xs text-slate-300 font-semibold uppercase mt-0.5">Kabupaten / Kota</div>
               </div>
-              <div className="p-3 rounded-lg bg-slate-900/70 border border-slate-800">
-                <div className="text-2xl sm:text-3xl font-extrabold text-white">28</div>
-                <div className="text-[11px] sm:text-xs text-slate-400 font-medium uppercase mt-0.5">Cabang Olahraga</div>
+              <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 backdrop-blur-xs">
+                <div className="text-2xl sm:text-3xl font-black text-white">28</div>
+                <div className="text-[10px] sm:text-xs text-slate-300 font-semibold uppercase mt-0.5">Cabang Olahraga</div>
               </div>
-              <div className="p-3 rounded-lg bg-slate-900/70 border border-slate-800">
-                <div className="text-2xl sm:text-3xl font-extrabold text-brand-gold-light">380+</div>
-                <div className="text-[11px] sm:text-xs text-slate-400 font-medium uppercase mt-0.5">Medali Emas</div>
+              <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 backdrop-blur-xs">
+                <div className="text-2xl sm:text-3xl font-black text-brand-gold-light">380+</div>
+                <div className="text-[10px] sm:text-xs text-slate-300 font-semibold uppercase mt-0.5">Medali Emas</div>
               </div>
-              <div className="p-3 rounded-lg bg-slate-900/70 border border-slate-800">
-                <div className="text-2xl sm:text-3xl font-extrabold text-white">5.400+</div>
-                <div className="text-[11px] sm:text-xs text-slate-400 font-medium uppercase mt-0.5">Atlet & Ofisial</div>
+              <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 backdrop-blur-xs">
+                <div className="text-2xl sm:text-3xl font-black text-white">5.400+</div>
+                <div className="text-[10px] sm:text-xs text-slate-300 font-semibold uppercase mt-0.5">Atlet & Ofisial</div>
               </div>
             </div>
 
@@ -132,7 +133,7 @@ export const Hero: React.FC<HeroProps> = ({ topMedals, onNavigate }) => {
           <div className="lg:col-span-5 space-y-5">
             
             {/* Official Countdown Box */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-brand-navy/90 border border-slate-700/80 shadow-xl backdrop-blur-md">
+            <div className="p-5 sm:p-6 rounded-2xl bg-brand-navy/95 border border-slate-700 shadow-xl backdrop-blur-md">
               <div className="flex items-center justify-between pb-4 border-b border-slate-800">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-5 h-5 text-brand-gold-light" />
@@ -140,34 +141,34 @@ export const Hero: React.FC<HeroProps> = ({ topMedals, onNavigate }) => {
                     Sisa Waktu Penyelenggaraan
                   </span>
                 </div>
-                <span className="text-[11px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/80 px-2 py-0.5 rounded">
+                <span className="text-[11px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded">
                   AKTIF
                 </span>
               </div>
 
               {/* Timer Counters */}
               <div className="grid grid-cols-4 gap-2 text-center py-4">
-                <div className="bg-slate-900/90 rounded-xl p-2.5 border border-slate-800">
+                <div className="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800">
                   <span className="block text-2xl sm:text-3xl font-black text-white">{timeLeft.days}</span>
-                  <span className="text-[10px] sm:text-xs text-slate-400 uppercase font-semibold">Hari</span>
+                  <span className="text-[10px] sm:text-xs text-slate-400 uppercase font-bold">Hari</span>
                 </div>
-                <div className="bg-slate-900/90 rounded-xl p-2.5 border border-slate-800">
+                <div className="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800">
                   <span className="block text-2xl sm:text-3xl font-black text-brand-gold-light">{timeLeft.hours}</span>
-                  <span className="text-[10px] sm:text-xs text-slate-400 uppercase font-semibold">Jam</span>
+                  <span className="text-[10px] sm:text-xs text-slate-400 uppercase font-bold">Jam</span>
                 </div>
-                <div className="bg-slate-900/90 rounded-xl p-2.5 border border-slate-800">
+                <div className="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800">
                   <span className="block text-2xl sm:text-3xl font-black text-white">{timeLeft.minutes}</span>
-                  <span className="text-[10px] sm:text-xs text-slate-400 uppercase font-semibold">Menit</span>
+                  <span className="text-[10px] sm:text-xs text-slate-400 uppercase font-bold">Menit</span>
                 </div>
-                <div className="bg-slate-900/90 rounded-xl p-2.5 border border-slate-800">
+                <div className="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800">
                   <span className="block text-2xl sm:text-3xl font-black text-brand-gold-light">{timeLeft.seconds}</span>
-                  <span className="text-[10px] sm:text-xs text-slate-400 uppercase font-semibold">Detik</span>
+                  <span className="text-[10px] sm:text-xs text-slate-400 uppercase font-bold">Detik</span>
                 </div>
               </div>
             </div>
 
             {/* Quick Leaders Preview Card */}
-            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl">
+            <div className="p-5 rounded-2xl bg-slate-950/90 border border-slate-800 shadow-xl">
               <div className="flex items-center justify-between mb-3.5">
                 <div className="flex items-center gap-2">
                   <Trophy className="w-4 h-4 text-brand-gold-light" />
@@ -177,7 +178,7 @@ export const Hero: React.FC<HeroProps> = ({ topMedals, onNavigate }) => {
                 </div>
                 <button
                   onClick={() => onNavigate('klasemen')}
-                  className="text-xs font-semibold text-brand-gold-light hover:text-white flex items-center gap-0.5"
+                  className="text-xs font-bold text-brand-gold-light hover:text-white flex items-center gap-0.5"
                 >
                   <span>Lengkap</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -194,7 +195,7 @@ export const Hero: React.FC<HeroProps> = ({ topMedals, onNavigate }) => {
                   return (
                     <div 
                       key={item.id}
-                      className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-slate-700 transition-colors"
+                      className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         <span className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs ${rankColors[idx] || 'bg-slate-800 text-slate-300'}`}>
@@ -202,7 +203,7 @@ export const Hero: React.FC<HeroProps> = ({ topMedals, onNavigate }) => {
                         </span>
                         <div>
                           <p className="text-xs sm:text-sm font-bold text-white">{item.contingent}</p>
-                          <p className="text-[10px] text-slate-400">Total: {item.total} Medali</p>
+                          <p className="text-[10px] text-slate-400 font-medium">Total: {item.total} Medali</p>
                         </div>
                       </div>
 
@@ -211,7 +212,7 @@ export const Hero: React.FC<HeroProps> = ({ topMedals, onNavigate }) => {
                         <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold">
                           🥇 {item.gold}
                         </span>
-                        <span className="px-2 py-0.5 rounded bg-slate-700 text-slate-200 font-bold">
+                        <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-200 font-bold border border-slate-700">
                           🥈 {item.silver}
                         </span>
                         <span className="px-2 py-0.5 rounded bg-orange-950 text-orange-300 border border-orange-800/40 font-bold">
