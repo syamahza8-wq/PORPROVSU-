@@ -9,19 +9,21 @@ import {
   Newspaper, 
   ShieldCheck, 
   Database,
-  ExternalLink
+  Code2
 } from 'lucide-react';
 
 interface NavbarProps {
   activeSection: string;
   onNavigate: (sectionId: string) => void;
   onOpenAdmin: () => void;
+  onOpenDeveloperNotice: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
   activeSection, 
   onNavigate, 
-  onOpenAdmin 
+  onOpenAdmin,
+  onOpenDeveloperNotice
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -55,7 +57,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1 text-slate-300">
+            <button
+              onClick={onOpenDeveloperNotice}
+              className="inline-flex items-center gap-1 text-brand-gold-light hover:underline font-bold"
+            >
+              <Code2 className="w-3.5 h-3.5" />
+              <span>Vibe Coder Note</span>
+            </button>
+            <span className="hidden sm:inline text-slate-500">•</span>
+            <span className="hidden sm:inline-flex items-center gap-1 text-slate-300">
               <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
               Portal Resmi Aktif
             </span>
@@ -78,7 +88,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 alt="Logo Porprovsu" 
                 className="w-full h-full object-contain"
                 onError={(e) => {
-                  // Fallback to jpeg if png has any issues
                   (e.target as HTMLImageElement).src = '/assets/logo.jpeg';
                 }}
               />
@@ -120,8 +129,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Action Button: Firebase & Admin Panel */}
+          {/* Action Buttons: Developer Notice & Firebase Admin */}
           <div className="hidden sm:flex items-center gap-2">
+            <button
+              onClick={onOpenDeveloperNotice}
+              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg border border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100 transition-all shadow-xs"
+              title="Catatan Developer Muhammad Syam Ahza"
+            >
+              <Code2 className="w-3.5 h-3.5 text-brand-gold" />
+              <span>Pesan Developer</span>
+            </button>
+
             <button
               onClick={onOpenAdmin}
               className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold rounded-lg border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 hover:border-brand-royal transition-all active:scale-95 shadow-sm"
@@ -134,6 +152,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Mobile Hamburger Button */}
           <div className="flex items-center gap-2 lg:hidden">
+            <button
+              onClick={onOpenDeveloperNotice}
+              className="p-2 rounded-lg border border-amber-300 bg-amber-50 text-amber-900"
+              title="Pesan Pengembang"
+            >
+              <Code2 className="w-5 h-5 text-brand-gold" />
+            </button>
             <button
               onClick={onOpenAdmin}
               className="p-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
@@ -175,7 +200,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             );
           })}
 
-          <div className="pt-3 border-t border-slate-100">
+          <div className="pt-3 border-t border-slate-100 space-y-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenDeveloperNotice();
+              }}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-amber-100 text-amber-900 border border-amber-300 font-bold text-xs uppercase tracking-wider"
+            >
+              <Code2 className="w-4 h-4 text-brand-gold" />
+              <span>Pesan Developer Muhammad Syam Ahza</span>
+            </button>
+
             <button
               onClick={() => {
                 setMobileMenuOpen(false);

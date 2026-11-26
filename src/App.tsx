@@ -11,6 +11,8 @@ import { ContingentsSection } from './components/ContingentsSection';
 import { NewsSection } from './components/NewsSection';
 import { Footer } from './components/Footer';
 import { AdminModal } from './components/AdminModal';
+import { IntroLoader } from './components/IntroLoader';
+import { DeveloperNoticeModal } from './components/DeveloperNoticeModal';
 import { 
   subscribeToMedals, 
   subscribeToSchedules, 
@@ -20,6 +22,11 @@ import { MedalStanding, MatchSchedule, NewsArticle } from './types';
 import { INITIAL_MEDALS, INITIAL_SCHEDULES, INITIAL_NEWS } from './constants/initialData';
 
 export const App: React.FC = () => {
+  // 3-second Intro Loading State (Strictly 3s, no skip)
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  // Developer notice modal state
+  const [isNoticeOpen, setIsNoticeOpen] = useState<boolean>(false);
+
   const [activeSection, setActiveSection] = useState<string>('beranda');
   const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
 
@@ -51,6 +58,12 @@ export const App: React.FC = () => {
     };
   }, []);
 
+  const handleIntroComplete = () => {
+    setIsLoading(false);
+    // After 3 seconds loading completes, immediately show the explanation modal
+    setIsNoticeOpen(true);
+  };
+
   const handleNavigate = (sectionId: string) => {
     setActiveSection(sectionId);
     if (sectionId === 'beranda') {
@@ -67,6 +80,11 @@ export const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-brand-surface font-sans text-brand-dark antialiased">
       
+      {/* 0. 3-Second Intro Loader: Strict 3 seconds duration, cannot be skipped */}
+      {isLoading && (
+        <IntroLoader onComplete={handleIntroComplete} />
+      )}
+
       {/* 1. Running Ticker: Live Scores & Announcements */}
       <RunningTicker schedules={schedules} />
 
@@ -75,6 +93,7 @@ export const App: React.FC = () => {
         activeSection={activeSection}
         onNavigate={handleNavigate}
         onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenDeveloperNotice={() => setIsNoticeOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -123,6 +142,12 @@ export const App: React.FC = () => {
         onClose={() => setIsAdminOpen(false)}
         medals={medals}
         schedules={schedules}
+      />
+
+      {/* 13. Modal Pernyataan Pengembang Muhammad Syam Ahza */}
+      <DeveloperNoticeModal
+        isOpen={isNoticeOpen}
+        onClose={() => setIsNoticeOpen(false)}
       />
 
     </div>
