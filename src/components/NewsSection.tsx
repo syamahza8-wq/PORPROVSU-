@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Newspaper, Calendar, Clock, ChevronRight, X, User } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Newspaper, Calendar, User, ArrowRight, X, Clock } from 'lucide-react';
 import { NewsArticle } from '../types';
 
 interface NewsSectionProps {
@@ -7,133 +7,151 @@ interface NewsSectionProps {
 }
 
 export const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('Semua');
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
 
+  const categories = useMemo(() => {
+    const uniq = Array.from(new Set(news.map((n) => n.category)));
+    return ['Semua', ...uniq];
+  }, [news]);
+
+  const filteredNews = useMemo(() => {
+    if (selectedCategory === 'Semua') return news;
+    return news.filter((n) => n.category === selectedCategory);
+  }, [news, selectedCategory]);
+
   return (
-    <section id="berita" className="scroll-mt-36 py-14 sm:py-20 bg-white border-b border-slate-200">
+    <section id="berita" className="py-10 sm:py-14 bg-slate-50/70 border-b border-slate-200/70">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-brand-royal text-xs font-bold uppercase tracking-wider mb-2">
-            <Newspaper className="w-3.5 h-3.5 text-brand-gold" />
-            <span>Kabar & Liputan Media</span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-[#0284C7] text-[11px] font-extrabold uppercase tracking-wider mb-2.5">
+              <Newspaper className="w-3.5 h-3.5" />
+              <span>Kabar Terkini PORPROVSU</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">
+              Berita &amp; Liputan Resmi PORPROVSU XII
+            </h2>
+            <p className="text-sm text-slate-600 mt-1 max-w-2xl">
+              Informasi resmi, kesiapan kontingen Kabupaten/Kota, serta liputan persiapan cabang olahraga Sumatera Utara.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-black text-brand-dark tracking-tight">
-            Berita Terkini PORPROVSU
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 mt-2">
-            Informasi resmi capaian rekor atlet, klasemen daerah, dan agenda harian pertandingan.
-          </p>
+
+          <div className="flex flex-wrap gap-1.5">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer ${
+                  selectedCategory === cat
+                    ? 'bg-[#0284C7] border-[#0284C7] text-white shadow-xs'
+                    : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* News Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {news.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => setSelectedArticle(item)}
-              className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md hover:border-brand-royal transition-all flex flex-col justify-between cursor-pointer group"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {filteredNews.map((article) => (
+            <article
+              key={article.id}
+              onClick={() => setSelectedArticle(article)}
+              className="group bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:border-sky-200 transition-all flex flex-col cursor-pointer"
             >
-              <div>
-                <div className="relative h-44 overflow-hidden bg-slate-50 border-b border-slate-100 p-4 flex items-center justify-center">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-3 left-3 bg-brand-royal text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">
-                    {item.category}
-                  </div>
-                </div>
+              <div className="relative aspect-[16/10] bg-slate-100 overflow-hidden">
+                <img
+                  src={article.image}
+                  alt={article.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 text-[#0284C7] text-[10px] font-extrabold uppercase tracking-wider shadow-xs">
+                  {article.category}
+                </span>
+              </div>
 
-                <div className="p-4 sm:p-5 space-y-2">
-                  <div className="flex items-center gap-2 text-[11px] text-slate-400 font-medium">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-brand-gold" />
-                      {item.date}
+              <div className="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3 text-[11px] font-semibold text-slate-400 mb-2">
+                    <span className="inline-flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {article.date}
                     </span>
-                    <span>•</span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {item.readTime}
+                    <span className="inline-flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5" />
+                      {article.readTime}
                     </span>
                   </div>
 
-                  <h3 className="font-bold text-sm sm:text-base text-slate-900 group-hover:text-brand-royal transition-colors line-clamp-2">
-                    {item.title}
+                  <h3 className="text-base sm:text-lg font-extrabold text-[#0F172A] group-hover:text-[#0284C7] transition-colors leading-snug mb-2 line-clamp-2">
+                    {article.title}
                   </h3>
-
-                  <p className="text-xs text-slate-500 line-clamp-3 leading-relaxed">
-                    {item.excerpt}
+                  <p className="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
+                    {article.excerpt}
                   </p>
                 </div>
-              </div>
 
-              <div className="p-4 sm:p-5 pt-0 flex items-center justify-between text-xs font-bold text-brand-royal group-hover:text-brand-gold transition-colors">
-                <span>Baca Selengkapnya</span>
-                <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold">
+                  <span className="inline-flex items-center gap-1.5 text-slate-500">
+                    <User className="w-3.5 h-3.5" />
+                    {article.author}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[#0284C7] group-hover:translate-x-0.5 transition-transform">
+                    Baca <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
 
       {/* Article Detail Modal */}
       {selectedArticle && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 p-6 sm:p-8 space-y-5">
-            <div className="flex items-start justify-between gap-4">
-              <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-royal text-white">
-                {selectedArticle.category}
-              </span>
-              <button
-                onClick={() => setSelectedArticle(null)}
-                className="p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-2">
-              <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-snug">
-                {selectedArticle.title}
-              </h3>
-              <div className="flex items-center gap-3 text-xs text-slate-500 font-medium pb-2 border-b border-slate-100">
-                <span className="flex items-center gap-1">
-                  <User className="w-3.5 h-3.5 text-brand-gold" />
-                  {selectedArticle.author}
-                </span>
-                <span>•</span>
-                <span className="flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5" />
-                  {selectedArticle.date}
-                </span>
-              </div>
-            </div>
-
-            <div className="rounded-2xl overflow-hidden max-h-56 bg-slate-50 border border-slate-200 p-4 flex items-center justify-center">
+        <div
+          className="fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-xs flex items-center justify-center p-4 animate-fadeIn"
+          onClick={() => setSelectedArticle(null)}
+        >
+          <div
+            className="bg-white rounded-3xl max-w-2xl w-full max-h-[88vh] overflow-y-auto shadow-2xl border border-slate-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative aspect-video bg-slate-900">
               <img
                 src={selectedArticle.image}
                 alt={selectedArticle.title}
-                className="max-h-48 object-contain"
+                className="w-full h-full object-cover"
               />
-            </div>
-
-            <div className="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
-              <p className="font-semibold text-slate-900 italic">{selectedArticle.excerpt}</p>
-              <p>{selectedArticle.content}</p>
-              <p>
-                Ajang PORPROVSU terus menjadi barometer pembinaan olahraga daerah yang transparan, akuntabel, dan kompetitif dalam mencetak atlet bermental juara.
-              </p>
-            </div>
-
-            <div className="pt-4 border-t border-slate-100 flex justify-end">
               <button
                 onClick={() => setSelectedArticle(null)}
-                className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs uppercase tracking-wider"
+                className="sticky sm:absolute top-3 right-3 float-right m-3 sm:m-0 w-9 h-9 rounded-full bg-white/95 hover:bg-white text-[#0F172A] flex items-center justify-center shadow-md cursor-pointer"
+                aria-label="Tutup berita"
               >
-                Tutup Artikel
+                <X className="w-4 h-4" />
               </button>
+            </div>
+
+            <div className="p-5 sm:p-8">
+              <div className="flex flex-wrap items-center gap-2.5 text-xs font-bold mb-3">
+                <span className="px-2.5 py-1 rounded-full bg-sky-50 border border-sky-200 text-[#0284C7] uppercase tracking-wider text-[10px]">
+                  {selectedArticle.category}
+                </span>
+                <span className="text-slate-400">{selectedArticle.date}</span>
+                <span className="text-slate-400">• {selectedArticle.author}</span>
+              </div>
+
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] leading-snug mb-4">
+                {selectedArticle.title}
+              </h3>
+
+              <div className="space-y-4 text-sm sm:text-base text-slate-700 leading-relaxed">
+                {selectedArticle.content.split(/\n+/).map((para, idx) => (
+                  <p key={idx}>{para}</p>
+                ))}
+              </div>
             </div>
           </div>
         </div>

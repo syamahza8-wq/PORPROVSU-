@@ -1,248 +1,306 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Sparkles,
   Calendar,
-  MapPin,
-  Users,
-  Flame,
-  UserCheck,
   Activity,
-  ShieldCheck,
-  ChevronRight
+  Flame,
+  MapPin,
+  Trophy,
+  Shield,
+  ChevronRight,
 } from 'lucide-react';
 import { ASSETS } from '../assets';
+import { EVENT_CONFIG } from '../constants/initialData';
 
 interface HeroProps {
-  athletesCount: number;
-  coachesCount: number;
-  onNavigate: (sectionId: string) => void;
+  totalContingents: number;
+  totalVenues: number;
+  totalCabor: number;
+  totalSchedules: number;
+  onNavigate: (section: string) => void;
+}
+
+interface TimeLeft {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  isLive: boolean;
+}
+
+function getTimeLeft(): TimeLeft {
+  const target = new Date(EVENT_CONFIG.targetDate).getTime();
+  const now = Date.now();
+  const diff = target - now;
+
+  if (diff <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0, isLive: true };
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  return { days, hours, minutes, seconds, isLive: false };
 }
 
 export const Hero: React.FC<HeroProps> = ({
-  athletesCount,
-  coachesCount,
+  totalContingents,
+  totalVenues,
+  totalCabor,
+  totalSchedules,
   onNavigate,
 }) => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => getTimeLeft());
 
   useEffect(() => {
-    const target = new Date('2026-12-09T23:59:59+07:00').getTime();
-
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = target - now;
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        });
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
+    const timer = setInterval(() => {
+      setTimeLeft(getTimeLeft());
     }, 1000);
-
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, []);
 
-  const hostClusters = [
-    { city: 'Kota Medan', desc: 'Kolam Renang Selayang, Taman Cadika, GOR Mini Dispora' },
-    { city: 'Kab. Deli Serdang', desc: 'Stadion Utama & Madya Sumut Batang Kuis, GSG Pancing' },
-    { city: 'Kota Binjai', desc: 'GOR Baru Jl. Danau Puso Km 18 & GOR Rambung' },
-    { city: 'Kota Pematangsiantar', desc: 'GOR Suzuya Merdeka Mall, Hotel Manna, Pelita VC' },
-  ];
+  const pad = (val: number) => String(val).padStart(2, '0');
 
   return (
-    <section className="relative bg-white text-brand-dark overflow-hidden border-b border-slate-200">
-      <div className="h-1.5 w-full flex">
-        <div className="w-1/3 bg-brand-royal" />
-        <div className="w-1/3 bg-brand-gold" />
-        <div className="w-1/3 bg-brand-maroon" />
-      </div>
+    <section className="relative">
+      {/* Main Hero Canvas */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#F8FAFC] via-[#EFF6FF] to-[#E0F2FE]/60 border-b border-slate-200/70">
+        {/* Dot Pattern Layer */}
+        <div className="hero-dot-pattern absolute inset-0 opacity-70 pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-          {/* Left Column */}
-          <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm font-bold tracking-wide uppercase shadow-2xs">
-              <Flame className="w-4 h-4 text-brand-gold" />
-              <span>Pekan Olahraga Provinsi Sumatera Utara</span>
+        {/* Desktop Right Leader Photo Backdrop (matching porprovsumut.com) */}
+        <div className="hidden md:block absolute inset-y-0 right-0 w-[62%] lg:w-[58%] pointer-events-none select-none overflow-hidden">
+          <img
+            src={ASSETS.kadis}
+            alt="Pimpinan Pemerintah Sumatera Utara - PORPROVSU XII 2026"
+            className="w-full h-full object-cover object-[75%_14%] opacity-90"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#F8FAFC] via-[#EFF6FF]/92 via-32% to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAFC]/80 via-transparent to-[#F8FAFC]/25" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-14 lg:pt-16 pb-20 sm:pb-24 lg:pb-28">
+          <div className="max-w-2xl">
+            {/* Official Pill Badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-sky-200/80 shadow-xs mb-5">
+              <Sparkles className="w-3.5 h-3.5 text-[#0284C7]" />
+              <span className="text-[11px] font-extrabold tracking-[0.14em] text-[#0284C7] uppercase">
+                {EVENT_CONFIG.title}
+              </span>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center lg:items-start gap-4">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 p-2 rounded-2xl bg-white border-2 border-slate-200 shadow-sm shrink-0 flex items-center justify-center">
-                <img
-                  src={ASSETS.logo}
-                  alt="Logo PORPROVSU"
-                  className="w-full h-full object-contain"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = ASSETS.logoJpeg;
-                  }}
-                />
-              </div>
+            {/* Hero Headline */}
+            <h1 className="text-3xl sm:text-5xl lg:text-[3.35rem] font-extrabold text-[#0F172A] tracking-tight leading-[1.09] mb-4 sm:mb-5">
+              {EVENT_CONFIG.heroHeadline}
+            </h1>
 
-              <div className="space-y-1.5">
-                <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-brand-dark">
-                  PORPROVSU <span className="text-brand-gold">XII 2026</span>
-                </h1>
-                <p className="text-base sm:text-xl font-extrabold text-brand-royal">
-                  “Bersatu Juara, Menembus Prestasi Emas Sumatera Utara”
-                </p>
-              </div>
-            </div>
-
-            <p className="text-xs sm:text-base text-slate-600 max-w-2xl leading-relaxed mx-auto lg:mx-0">
-              Portal informasi publik resmi Pekan Olahraga Provinsi Sumatera Utara berbasis Firebase Cloud Firestore. Pantau jadwal pertandingan, daftar 30 cabang olahraga resmi, lokasi venue, serta kontingen 33 kabupaten/kota.
+            {/* Hero Subtitle */}
+            <p className="text-sm sm:text-lg text-slate-600 leading-relaxed max-w-xl mb-7 sm:mb-8 font-medium">
+              {EVENT_CONFIG.heroSubheadline}
             </p>
 
-            {/* Action Buttons (Pure Public Navigation) */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
-              <button
-                onClick={() => onNavigate('atlet-pelatih')}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-brand-royal hover:bg-brand-dark text-white font-bold text-xs sm:text-sm shadow-sm transition-all active:scale-95"
-              >
-                <Users className="w-4 h-4 text-brand-gold-light" />
-                <span>Data Atlet & Pelatih</span>
-              </button>
-
-              <button
-                onClick={() => onNavigate('venue')}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-brand-gold hover:bg-brand-gold-dark text-white font-bold text-xs sm:text-sm shadow-sm transition-all active:scale-95"
-              >
-                <MapPin className="w-4 h-4 text-white" />
-                <span>Lokasi & Cabor</span>
-              </button>
-
+            {/* Primary & Secondary CTAs */}
+            <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={() => onNavigate('jadwal')}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold text-xs sm:text-sm transition-all active:scale-95"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white text-sm font-bold shadow-md shadow-sky-600/20 transition-all cursor-pointer"
               >
-                <Calendar className="w-4 h-4 text-brand-royal" />
+                <Calendar className="w-4 h-4" />
                 <span>Jadwal Pertandingan</span>
-              </button>
-            </div>
-
-            {/* Quick Access Menu Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-4 border-t border-slate-200">
-              <button
-                onClick={() => onNavigate('kontingen')}
-                className="p-3 rounded-2xl bg-slate-50 hover:bg-amber-50 border border-slate-200 hover:border-amber-300 text-left transition-all"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xl sm:text-2xl font-black text-brand-gold">33</span>
-                  <ShieldCheck className="w-4 h-4 text-brand-gold" />
-                </div>
-                <div className="text-[11px] text-slate-700 font-bold mt-0.5">Kabupaten & Kota</div>
               </button>
 
               <button
                 onClick={() => onNavigate('cabor')}
-                className="p-3 rounded-2xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-left transition-all"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#F59E0B] hover:bg-[#D97706] text-white text-sm font-bold shadow-md shadow-amber-500/20 transition-all cursor-pointer"
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-xl sm:text-2xl font-black text-brand-royal">30</span>
-                  <Activity className="w-4 h-4 text-brand-royal" />
-                </div>
-                <div className="text-[11px] text-slate-700 font-bold mt-0.5">Cabang Olahraga</div>
-              </button>
-
-              <button
-                onClick={() => onNavigate('atlet-pelatih')}
-                className="p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-left transition-all"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xl sm:text-2xl font-black text-emerald-700">{athletesCount}</span>
-                  <UserCheck className="w-4 h-4 text-emerald-700" />
-                </div>
-                <div className="text-[11px] text-slate-700 font-bold mt-0.5">Atlet & {coachesCount} Pelatih</div>
-              </button>
-
-              <button
-                onClick={() => onNavigate('venue')}
-                className="p-3 rounded-2xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-left transition-all"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xl sm:text-2xl font-black text-brand-maroon">10</span>
-                  <MapPin className="w-4 h-4 text-brand-maroon" />
-                </div>
-                <div className="text-[11px] text-slate-700 font-bold mt-0.5">Venue Resmi</div>
+                <Activity className="w-4 h-4" />
+                <span>Cabang Olahraga</span>
               </button>
             </div>
-          </div>
 
-          {/* Right Column: Bright Countdown & 4 Host Clusters */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-200">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-brand-gold" />
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-slate-800">
-                    Jadwal Penyelenggaraan (1–9 Des)
-                  </span>
-                </div>
-                <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                  RESMI
+            {/* Clean Framed Leader Banner ONLY on Mobile (< md) */}
+            <div className="md:hidden mt-6 relative rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm bg-white">
+              <img
+                src={ASSETS.kadis}
+                alt="Pimpinan Pemerintah Sumatera Utara - PORPROVSU XII 2026"
+                className="w-full h-44 object-cover object-top"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0F172A]/85 via-[#0F172A]/45 to-transparent px-3.5 py-2.5">
+                <p className="text-[10px] font-extrabold uppercase tracking-wider text-amber-300">
+                  Pekan Olahraga Provinsi Sumatera Utara
+                </p>
+                <p className="text-xs font-bold text-white">
+                  Menuju PON XXII Nusa Tenggara Barat &amp; Timur
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Overlapping Countdown Bar & 4 Stat Cards */}
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-11 sm:-mt-14 pb-8">
+        {/* Hitung Mundur Pembukaan Card */}
+        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-900/[0.06] p-4 sm:p-7 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6">
+          <div className="flex items-start sm:items-center gap-3.5 sm:gap-4">
+            <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center shrink-0">
+              <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-[#F59E0B]" />
+            </div>
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="text-base sm:text-xl font-extrabold text-[#0F172A]">
+                  Hitung Mundur Pembukaan
+                </h2>
+                <span className="px-2.5 py-0.5 rounded-full bg-sky-50 border border-sky-100 text-[#0284C7] text-[10px] font-extrabold uppercase tracking-wider">
+                  PORPROVSU 2026
                 </span>
               </div>
+              <p className="text-xs sm:text-sm text-slate-500 font-medium flex items-center gap-1.5 mt-1">
+                <MapPin className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                <span>{EVENT_CONFIG.openingVenue}</span>
+              </p>
+            </div>
+          </div>
 
-              <div className="grid grid-cols-4 gap-2 text-center pt-3">
-                <div className="bg-white rounded-xl p-2.5 border border-slate-200 shadow-2xs">
-                  <span className="block text-xl sm:text-2xl font-black text-brand-dark">{timeLeft.days}</span>
-                  <span className="text-[10px] text-slate-500 uppercase font-bold">Hari</span>
-                </div>
-                <div className="bg-white rounded-xl p-2.5 border border-slate-200 shadow-2xs">
-                  <span className="block text-xl sm:text-2xl font-black text-brand-gold">{timeLeft.hours}</span>
-                  <span className="text-[10px] text-slate-500 uppercase font-bold">Jam</span>
-                </div>
-                <div className="bg-white rounded-xl p-2.5 border border-slate-200 shadow-2xs">
-                  <span className="block text-xl sm:text-2xl font-black text-brand-dark">{timeLeft.minutes}</span>
-                  <span className="text-[10px] text-slate-500 uppercase font-bold">Menit</span>
-                </div>
-                <div className="bg-white rounded-xl p-2.5 border border-slate-200 shadow-2xs">
-                  <span className="block text-xl sm:text-2xl font-black text-brand-gold">{timeLeft.seconds}</span>
-                  <span className="text-[10px] text-slate-500 uppercase font-bold">Detik</span>
-                </div>
+          {/* 4 Dark Navy Digit Boxes */}
+          <div className="grid grid-cols-4 gap-2 sm:gap-3 shrink-0">
+            <div className="bg-[#0F172A] rounded-2xl px-2 sm:px-4 py-2.5 sm:py-3 text-center min-w-[64px] sm:min-w-[80px] shadow-xs">
+              <div className="text-xl sm:text-3xl font-black text-white tabular-nums leading-none">
+                {timeLeft.days}
+              </div>
+              <div className="text-[9px] sm:text-[10px] font-bold tracking-[0.14em] text-slate-400 uppercase mt-1.5">
+                HARI
               </div>
             </div>
 
-            {/* 4 Klaster Tuan Rumah Card */}
-            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-brand-gold" />
-                  <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-brand-dark">
-                    4 Wilayah Tuan Rumah Venue
-                  </span>
-                </div>
-                <button
-                  onClick={() => onNavigate('venue')}
-                  className="text-xs font-bold text-brand-royal hover:text-brand-gold flex items-center gap-0.5"
-                >
-                  <span>Detail Lokasi</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
+            <div className="bg-[#0F172A] rounded-2xl px-2 sm:px-4 py-2.5 sm:py-3 text-center min-w-[64px] sm:min-w-[80px] shadow-xs">
+              <div className="text-xl sm:text-3xl font-black text-white tabular-nums leading-none">
+                {pad(timeLeft.hours)}
               </div>
+              <div className="text-[9px] sm:text-[10px] font-bold tracking-[0.14em] text-slate-400 uppercase mt-1.5">
+                JAM
+              </div>
+            </div>
 
-              <div className="space-y-2">
-                {hostClusters.map((h) => (
-                  <div
-                    key={h.city}
-                    className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80"
-                  >
-                    <p className="text-xs font-extrabold text-brand-royal">{h.city}</p>
-                    <p className="text-[11px] text-slate-600 line-clamp-1">{h.desc}</p>
-                  </div>
-                ))}
+            <div className="bg-[#0F172A] rounded-2xl px-2 sm:px-4 py-2.5 sm:py-3 text-center min-w-[64px] sm:min-w-[80px] shadow-xs">
+              <div className="text-xl sm:text-3xl font-black text-white tabular-nums leading-none">
+                {pad(timeLeft.minutes)}
+              </div>
+              <div className="text-[9px] sm:text-[10px] font-bold tracking-[0.14em] text-slate-400 uppercase mt-1.5">
+                MENIT
+              </div>
+            </div>
+
+            <div className="bg-[#0F172A] rounded-2xl px-2 sm:px-4 py-2.5 sm:py-3 text-center min-w-[64px] sm:min-w-[80px] shadow-xs">
+              <div className="text-xl sm:text-3xl font-black text-[#FBBF24] tabular-nums leading-none">
+                {pad(timeLeft.seconds)}
+              </div>
+              <div className="text-[9px] sm:text-[10px] font-bold tracking-[0.14em] text-slate-400 uppercase mt-1.5">
+                DETIK
               </div>
             </div>
           </div>
+        </div>
+
+        {/* 4 Summary Stat Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mt-5">
+          {/* Card 1: 30 Cabor */}
+          <button
+            onClick={() => onNavigate('cabor')}
+            className="text-left bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs hover:shadow-lg hover:border-sky-300 transition-all group cursor-pointer"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center shrink-0">
+                <Trophy className="w-5 h-5 text-[#F59E0B]" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] leading-none">
+                  {totalCabor}
+                </div>
+                <div className="text-[10px] sm:text-[11px] font-extrabold text-[#0284C7] uppercase tracking-wider mt-1 truncate">
+                  CABANG OLAHRAGA
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between text-[11px] sm:text-xs font-medium text-slate-500 group-hover:text-[#0284C7] transition-colors">
+              <span className="truncate">Daftar cabor yang bertanding</span>
+              <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+            </div>
+          </button>
+
+          {/* Card 2: 26 Venues */}
+          <button
+            onClick={() => onNavigate('venue')}
+            className="text-left bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all group cursor-pointer"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+                <MapPin className="w-5 h-5 text-emerald-600" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] leading-none">
+                  {totalVenues}
+                </div>
+                <div className="text-[10px] sm:text-[11px] font-extrabold text-emerald-600 uppercase tracking-wider mt-1 truncate">
+                  VENUE PERTANDINGAN
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between text-[11px] sm:text-xs font-medium text-slate-500 group-hover:text-emerald-600 transition-colors">
+              <span className="truncate">Gelanggang &amp; lokasi stadion</span>
+              <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+            </div>
+          </button>
+
+          {/* Card 3: 8 Jadwal */}
+          <button
+            onClick={() => onNavigate('jadwal')}
+            className="text-left bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs hover:shadow-lg hover:border-amber-300 transition-all group cursor-pointer"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center shrink-0">
+                <Calendar className="w-5 h-5 text-[#F59E0B]" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] leading-none">
+                  {totalSchedules}
+                </div>
+                <div className="text-[10px] sm:text-[11px] font-extrabold text-[#D97706] uppercase tracking-wider mt-1 truncate">
+                  JADWAL PERTANDINGAN
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between text-[11px] sm:text-xs font-medium text-slate-500 group-hover:text-[#D97706] transition-colors">
+              <span className="truncate">Kalender tanggal pertandingan</span>
+              <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+            </div>
+          </button>
+
+          {/* Card 4: 32 Kontingen */}
+          <button
+            onClick={() => onNavigate('klasemen')}
+            className="text-left bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs hover:shadow-lg hover:border-indigo-300 transition-all group cursor-pointer"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center shrink-0">
+                <Shield className="w-5 h-5 text-indigo-600" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] leading-none">
+                  {totalContingents}
+                </div>
+                <div className="text-[10px] sm:text-[11px] font-extrabold text-indigo-600 uppercase tracking-wider mt-1 truncate">
+                  KONTINGEN KAB/KOTA
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between text-[11px] sm:text-xs font-medium text-slate-500 group-hover:text-indigo-600 transition-colors">
+              <span className="truncate">Daerah peserta PORPROVSU</span>
+              <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+            </div>
+          </button>
         </div>
       </div>
     </section>

@@ -11,6 +11,7 @@ export interface MedalStanding {
   badgeColor?: string;
   emblemInitials?: string;
   athletesTotal?: number;
+  logoUrl?: string;
 }
 
 export type MatchStatus = 'UPCOMING' | 'LIVE' | 'COMPLETED';
@@ -38,11 +39,13 @@ export interface SportBranch {
   name: string;
   category: 'Beregu' | 'Individu' | 'Bela Diri' | 'Akuatik' | 'Akurasi';
   icon: string;
+  ikon?: string;
   venue: string;
   locationCity: string;
   athletesCount: number;
   goldMedalsCount: number;
   description: string;
+  nomorDaftar?: string[];
 }
 
 export interface NewsArticle {
@@ -56,6 +59,15 @@ export interface NewsArticle {
   author: string;
   image: string;
   readTime: string;
+}
+
+export interface GalleryItem {
+  id: string;
+  title: string;
+  category: string;
+  date: string;
+  image: string;
+  description: string;
 }
 
 export interface Venue {

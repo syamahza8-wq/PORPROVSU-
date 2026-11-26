@@ -1,150 +1,131 @@
 import React from 'react';
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Globe,
-  ShieldCheck,
-  ChevronRight
-} from 'lucide-react';
+import { Award, Calendar, MapPin, Shield, Trophy, Newspaper, Images, Users } from 'lucide-react';
 import { ASSETS } from '../assets';
 
 interface FooterProps {
-  onNavigate: (sectionId: string) => void;
+  onNavigate: (section: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
-    <footer className="bg-slate-100 text-slate-700 border-t border-slate-200 pt-14 pb-24 md:pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-10 border-b border-slate-200">
-          {/* Brand & Emblem */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-14 h-14 bg-white p-1.5 rounded-2xl flex items-center justify-center border border-slate-200 shadow-xs">
+    <footer className="bg-[#0F172A] text-slate-300 border-t border-slate-800 pb-20 lg:pb-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-slate-800">
+          {/* Brand */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-11 h-11 rounded-full bg-white p-1.5 flex items-center justify-center shrink-0">
                 <img
                   src={ASSETS.logo}
-                  alt="Logo Porprovsu"
+                  alt="Logo PORPROVSU 2026"
                   className="w-full h-full object-contain"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = ASSETS.logoJpeg;
-                  }}
                 />
               </div>
               <div>
-                <span className="font-black text-2xl text-brand-dark tracking-tight block">
-                  PORPROVSU <span className="text-brand-gold">XII 2026</span>
-                </span>
-                <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold block">
+                <h3 className="text-lg font-extrabold text-white tracking-tight flex items-center gap-1.5">
+                  <span>PORPROVSU 2026</span>
+                  <span className="w-2 h-2 rounded-full bg-[#0284C7]" />
+                </h3>
+                <p className="text-[11px] font-bold tracking-[0.16em] text-amber-400 uppercase">
                   Pekan Olahraga Provinsi Sumatera Utara
-                </span>
+                </p>
               </div>
             </div>
-
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-md">
-              Portal resmi Pekan Olahraga Provinsi Sumatera Utara yang diselenggarakan oleh Pemerintah Provinsi Sumatera Utara melalui DISPORA dan KONI Sumatera Utara.
+            <p className="text-sm text-slate-400 leading-relaxed max-w-md">
+              Pusat informasi resmi Pekan Olahraga Provinsi Sumatera Utara (PORPROVSU XII) Tahun 2026 — menyajikan jadwal pertandingan, 30 cabang olahraga, 26 venue resmi, 32 kontingen Kabupaten/Kota, serta klasemen medali real-time menuju PON XXII.
             </p>
-
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs text-brand-royal font-bold shadow-2xs">
-              <ShieldCheck className="w-4 h-4 text-brand-gold" />
-              <span>Database Cloud Firebase Firestore</span>
-            </div>
           </div>
 
-          {/* Quick Navigation */}
-          <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-brand-dark border-l-2 border-brand-gold pl-2">
-              Navigasi Informasi
+          {/* Menu Utama */}
+          <div>
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white mb-3.5">
+              Navigasi Portal
             </h4>
-            <ul className="space-y-2 text-xs font-semibold text-slate-600">
+            <ul className="space-y-2.5 text-sm">
               <li>
-                <button onClick={() => onNavigate('beranda')} className="hover:text-brand-royal flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>Beranda Utama</span>
+                <button
+                  onClick={() => onNavigate('klasemen')}
+                  className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <Award className="w-3.5 h-3.5 text-[#F59E0B]" /> Klasemen Medali
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('atlet-pelatih')} className="hover:text-brand-royal flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>Data Atlet & Pelatih</span>
+                <button
+                  onClick={() => onNavigate('jadwal')}
+                  className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <Calendar className="w-3.5 h-3.5 text-[#0284C7]" /> Jadwal Pertandingan
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('venue')} className="hover:text-brand-royal flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>Lokasi Venue & Cabor</span>
+                <button
+                  onClick={() => onNavigate('cabor')}
+                  className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <Trophy className="w-3.5 h-3.5 text-[#F59E0B]" /> 30 Cabang Olahraga
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('cabor')} className="hover:text-brand-royal flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>30 Cabang Olahraga</span>
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('jadwal')} className="hover:text-brand-royal flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>Jadwal & Hasil Pertandingan</span>
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('kontingen')} className="hover:text-brand-royal flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>33 Kontingen Kab/Kota</span>
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('berita')} className="hover:text-brand-royal flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>Berita & Liputan</span>
+                <button
+                  onClick={() => onNavigate('venue')}
+                  className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-emerald-400" /> 26 Lokasi Venue
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Sekretariat & Kontak */}
-          <div className="lg:col-span-4 space-y-4">
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-brand-dark border-l-2 border-brand-gold pl-2">
-              Sekretariat Penyelenggara
+          {/* Informasi Lainnya */}
+          <div>
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white mb-3.5">
+              Kontingen &amp; Media
             </h4>
-
-            <div className="space-y-2.5 text-xs text-slate-600">
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
-                <span>
-                  Gedung Dispora Provinsi Sumatera Utara, Jl. William Iskandar No. 9, Deli Serdang - Medan 20371
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-brand-gold shrink-0" />
-                <span>(061) 7360241 / Sekretariat KONI Sumut</span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-brand-gold shrink-0" />
-                <span>sekretariat@porprovsumut.com</span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Globe className="w-4 h-4 text-brand-gold shrink-0" />
-                <span>www.porprovsu.com</span>
-              </div>
-            </div>
+            <ul className="space-y-2.5 text-sm">
+              <li>
+                <button
+                  onClick={() => onNavigate('kontingen')}
+                  className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <Shield className="w-3.5 h-3.5 text-indigo-400" /> 32 Kontingen Kab/Kota
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onNavigate('atlet')}
+                  className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <Users className="w-3.5 h-3.5 text-sky-400" /> Data Atlet &amp; Pelatih
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onNavigate('berita')}
+                  className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <Newspaper className="w-3.5 h-3.5 text-amber-400" /> Berita PORPROVSU
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onNavigate('galeri')}
+                  className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <Images className="w-3.5 h-3.5 text-emerald-400" /> Galeri Foto
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
-          <div>
-            &copy; {new Date().getFullYear()} Panitia Besar PORPROVSU. Pemerintah Provinsi Sumatera Utara.
-          </div>
-          <div className="flex items-center gap-3">
-            <span>Dispora Sumut & KONI Sumut</span>
-            <span>•</span>
-            <span className="text-brand-gold font-bold">Sumut Hebat & Berprestasi</span>
-          </div>
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+          <p>
+            © 2026 PORPROVSU XII Sumatera Utara. Portal Informasi Resmi Terintegrasi Cloud Firestore.
+          </p>
+          <p className="font-semibold text-slate-400">
+            Lokasi Pembukaan: Gedung Serbaguna Pancing, Medan
+          </p>
         </div>
       </div>
     </footer>

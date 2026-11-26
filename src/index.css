@@ -6,7 +6,16 @@
   html {
     scroll-behavior: smooth;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
   }
+  body {
+    overflow-x: hidden;
+  }
+}
+
+.hero-dot-pattern {
+  background-image: radial-gradient(#CBD5E1 1.25px, transparent 1.25px);
+  background-size: 22px 22px;
 }
 
 /* Custom scrollbar */

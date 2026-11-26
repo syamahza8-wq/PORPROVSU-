@@ -23,9 +23,9 @@ const NEWS_COLLECTION = 'porprovsu_news';
 const ATHLETES_COLLECTION = 'porprovsu_athletes';
 const COACHES_COLLECTION = 'porprovsu_coaches';
 
-const LOCAL_MEDALS_KEY = 'local_porprovsu_medals';
-const LOCAL_SCHEDULES_KEY = 'local_porprovsu_schedules';
-const LOCAL_NEWS_KEY = 'local_porprovsu_news';
+const LOCAL_MEDALS_KEY = 'local_porprovsu_medals_v2';
+const LOCAL_SCHEDULES_KEY = 'local_porprovsu_schedules_v2';
+const LOCAL_NEWS_KEY = 'local_porprovsu_news_v2';
 const LOCAL_ATHLETES_KEY = 'local_porprovsu_athletes';
 const LOCAL_COACHES_KEY = 'local_porprovsu_coaches';
 
