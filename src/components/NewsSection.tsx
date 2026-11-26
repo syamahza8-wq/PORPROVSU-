@@ -10,7 +10,7 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
 
   return (
-    <section id="berita" className="py-14 sm:py-20 bg-white border-b border-slate-200">
+    <section id="berita" className="scroll-mt-36 py-14 sm:py-20 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">

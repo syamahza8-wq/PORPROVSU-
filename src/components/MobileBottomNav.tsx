@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  Trophy,
   Users,
   Home,
   MapPin,
-  FileEdit
+  Calendar,
+  ShieldCheck
 } from 'lucide-react';
 
 interface MobileBottomNavProps {
@@ -18,15 +18,14 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
 }) => {
   const items = [
     { id: 'beranda', label: 'Beranda', icon: Home },
-    { id: 'klasemen', label: 'Medali', icon: Trophy },
-    { id: 'atlet-pelatih', label: 'Atlet/Pelatih', icon: Users },
-    { id: 'venue', label: 'Lokasi/Cabor', icon: MapPin },
-    { id: 'form-portal', label: 'Form', icon: FileEdit },
+    { id: 'atlet-pelatih', label: 'Atlet', icon: Users },
+    { id: 'venue', label: 'Lokasi', icon: MapPin },
+    { id: 'jadwal', label: 'Jadwal', icon: Calendar },
   ];
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-40 bg-white/98 backdrop-blur-md border-t border-slate-200 py-1.5 px-2 md:hidden shadow-lg">
-      <div className="flex items-center justify-around">
+    <div className="fixed bottom-0 inset-x-0 z-40 bg-white/98 backdrop-blur-md border-t border-slate-200 py-1.5 px-1 md:hidden shadow-lg">
+      <div className="grid grid-cols-5 items-center">
         {items.map((item) => {
           const Icon = item.icon;
           const isActive = activeSection === item.id;
@@ -34,19 +33,34 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all ${
+              className={`flex flex-col items-center justify-center py-1 px-1 rounded-xl transition-all min-w-0 ${
                 isActive
                   ? 'text-brand-royal font-black'
                   : 'text-slate-500 hover:text-slate-800 font-semibold'
               }`}
             >
               <div className={`p-1 rounded-lg ${isActive ? 'bg-amber-100 text-amber-900' : ''}`}>
-                <Icon className={`w-5 h-5 ${isActive ? 'text-brand-gold' : 'text-slate-500'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-brand-gold' : 'text-slate-500'}`} />
               </div>
-              <span className="text-[10px] mt-0.5 tracking-tight">{item.label}</span>
+              <span className="text-[10px] mt-0.5 tracking-tight whitespace-nowrap truncate max-w-full">
+                {item.label}
+              </span>
             </button>
           );
         })}
+
+        {/* Direct Link to Separate KONI Kab/Kota Portal */}
+        <a
+          href="./koni-daerah/"
+          className="flex flex-col items-center justify-center py-1 px-1 rounded-xl text-amber-900 font-extrabold min-w-0"
+        >
+          <div className="p-1 rounded-lg bg-brand-gold text-white">
+            <ShieldCheck className="w-4 h-4" />
+          </div>
+          <span className="text-[10px] mt-0.5 tracking-tight whitespace-nowrap truncate max-w-full">
+            KONI
+          </span>
+        </a>
       </div>
     </div>
   );

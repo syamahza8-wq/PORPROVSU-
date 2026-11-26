@@ -1,28 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Trophy,
   Calendar,
   MapPin,
   Users,
   Flame,
-  ChevronRight,
   UserCheck,
   Activity,
-  FileEdit
+  ShieldCheck,
+  ExternalLink
 } from 'lucide-react';
-import { MedalStanding } from '../types';
 import { ASSETS } from '../assets';
-import { DistrictEmblem } from './DistrictEmblem';
 
 interface HeroProps {
-  topMedals: MedalStanding[];
   athletesCount: number;
   coachesCount: number;
   onNavigate: (sectionId: string) => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
-  topMedals,
   athletesCount,
   coachesCount,
   onNavigate,
@@ -69,8 +64,7 @@ export const Hero: React.FC<HeroProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           {/* Left Column: Bright Official Heading, Logo, CTAs */}
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
-            {/* Official Tag + Logo Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm font-bold tracking-wide uppercase shadow-2xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm font-bold tracking-wide uppercase shadow-2xs">
               <Flame className="w-4 h-4 text-brand-gold" />
               <span>Pekan Olahraga Provinsi Sumatera Utara</span>
             </div>
@@ -100,19 +94,11 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
 
             <p className="text-xs sm:text-base text-slate-600 max-w-2xl leading-relaxed mx-auto lg:mx-0">
-              Portal resmi data pertandingan terintegrasi berbasis Cloud Firestore. Pantau klasemen perolehan medali 33 Kabupaten & Kota, data atlet & pelatih, lokasi cabang olahraga, serta skor langsung.
+              Portal data terpadu PORPROVSU Sumatera Utara berbasis Firebase Cloud Firestore. Jelajahi data atlet & pelatih, medali perseorangan, lokasi cabang olahraga, jadwal tanding, serta portal resmi KONI Kabupaten/Kota.
             </p>
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
-              <button
-                onClick={() => onNavigate('klasemen')}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-brand-gold hover:bg-brand-gold-dark text-white font-bold text-xs sm:text-sm shadow-sm transition-all active:scale-95"
-              >
-                <Trophy className="w-4 h-4 text-white" />
-                <span>Klasemen Medali</span>
-              </button>
-
               <button
                 onClick={() => onNavigate('atlet-pelatih')}
                 className="flex items-center gap-2 px-5 py-3 rounded-xl bg-brand-royal hover:bg-brand-dark text-white font-bold text-xs sm:text-sm shadow-sm transition-all active:scale-95"
@@ -122,23 +108,32 @@ export const Hero: React.FC<HeroProps> = ({
               </button>
 
               <button
-                onClick={() => onNavigate('form-portal')}
+                onClick={() => onNavigate('venue')}
+                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-brand-gold hover:bg-brand-gold-dark text-white font-bold text-xs sm:text-sm shadow-sm transition-all active:scale-95"
+              >
+                <MapPin className="w-4 h-4 text-white" />
+                <span>Lokasi & Cabor</span>
+              </button>
+
+              <a
+                href="./koni-daerah/"
                 className="flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold text-xs sm:text-sm transition-all active:scale-95"
               >
-                <FileEdit className="w-4 h-4 text-brand-royal" />
-                <span>Form & Login</span>
-              </button>
+                <ShieldCheck className="w-4 h-4 text-brand-royal" />
+                <span>Portal Input KONI Kab/Kota</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+              </a>
             </div>
 
-            {/* Mobile & Desktop Quick Access Menu Cards (Lokasi Cabor, Atlet, Pelatih, Medali) */}
+            {/* Quick Access Menu Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-4 border-t border-slate-200">
               <button
-                onClick={() => onNavigate('klasemen')}
+                onClick={() => onNavigate('kontingen')}
                 className="p-3 rounded-2xl bg-slate-50 hover:bg-amber-50 border border-slate-200 hover:border-amber-300 text-left transition-all"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-xl sm:text-2xl font-black text-brand-gold">33</span>
-                  <Trophy className="w-4 h-4 text-brand-gold" />
+                  <ShieldCheck className="w-4 h-4 text-brand-gold" />
                 </div>
                 <div className="text-[11px] text-slate-700 font-bold mt-0.5">Kabupaten & Kota</div>
               </button>
@@ -178,9 +173,9 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
           </div>
 
-          {/* Right Column: Bright Countdown & Top 3 District Podium with DistrictEmblem */}
+          {/* Right Column: Bright Countdown & Portal KONI Daerah Card */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Official Countdown Box (Bright Clean Card) */}
+            {/* Official Countdown Box */}
             <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
               <div className="flex items-center justify-between pb-3 border-b border-slate-200">
                 <div className="flex items-center gap-2">
@@ -214,75 +209,33 @@ export const Hero: React.FC<HeroProps> = ({
               </div>
             </div>
 
-            {/* Quick Leaders Preview Card with Official District Emblems */}
-            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-              <div className="flex items-center justify-between mb-3.5">
-                <div className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4 text-brand-gold" />
-                  <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-900">
-                    Pimpinan Klasemen Kabupaten/Kota
-                  </span>
+            {/* Dedicated Card: Portal Khusus KONI Kab/Kota */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-amber-50/70 border-2 border-amber-200 shadow-sm space-y-3">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-brand-gold text-white shrink-0">
+                  <ShieldCheck className="w-5 h-5" />
                 </div>
-                <button
-                  onClick={() => onNavigate('klasemen')}
-                  className="text-xs font-bold text-brand-royal hover:text-brand-gold flex items-center gap-0.5"
-                >
-                  <span>Semua 33</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
+                <div>
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-900 block">
+                    Portal Terpisah Per Daerah
+                  </span>
+                  <h3 className="font-black text-base text-brand-dark">
+                    Pendaftaran & Input Data Atlet KONI
+                  </h3>
+                </div>
               </div>
 
-              <div className="space-y-2.5">
-                {topMedals.slice(0, 3).map((item, idx) => {
-                  const rankColors = [
-                    'bg-amber-400 text-slate-950 font-black',
-                    'bg-slate-200 text-slate-900 font-bold',
-                    'bg-orange-700 text-white font-bold',
-                  ];
-                  return (
-                    <div
-                      key={item.id}
-                      className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-brand-royal transition-colors"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <span
-                          className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0 ${
-                            rankColors[idx] || 'bg-slate-200 text-slate-700'
-                          }`}
-                        >
-                          {item.rank}
-                        </span>
-                        <DistrictEmblem
-                          initials={item.emblemInitials || item.regionCode}
-                          bg={item.badgeBg}
-                          size="sm"
-                          name={item.contingent}
-                        />
-                        <div>
-                          <p className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-1">
-                            {item.contingent}
-                          </p>
-                          <p className="text-[10px] text-slate-500 font-semibold">
-                            Total: {item.total} Medali
-                          </p>
-                        </div>
-                      </div>
+              <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                Penginputan data atlet & pelatih dibatasi khusus untuk masing-masing pengurus <strong>KONI Kabupaten / Kota</strong> di folder portal khusus agar data resmi terjaga validitasnya.
+              </p>
 
-                      <div className="flex items-center gap-1.5 text-[11px] shrink-0">
-                        <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-200 font-bold">
-                          🥇 {item.gold}
-                        </span>
-                        <span className="px-2 py-0.5 rounded bg-slate-200 text-slate-800 font-bold">
-                          🥈 {item.silver}
-                        </span>
-                        <span className="px-2 py-0.5 rounded bg-orange-100 text-orange-900 border border-orange-200 font-bold">
-                          🥉 {item.bronze}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+              <a
+                href="./koni-daerah/"
+                className="w-full py-3 px-4 rounded-xl bg-brand-royal hover:bg-brand-dark text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xs"
+              >
+                <span>Masuk ke Portal KONI Kab/Kota</span>
+                <ExternalLink className="w-4 h-4 text-brand-gold-light" />
+              </a>
             </div>
           </div>
         </div>

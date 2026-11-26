@@ -254,10 +254,13 @@ export async function updateScheduleItem(schedule: MatchSchedule): Promise<void>
   }
 }
 
-// 7b. Add Athlete
+// 7b. Add / Update Athlete
 export async function addAthleteItem(athlete: Athlete): Promise<void> {
   const current = getLocalData<Athlete[]>(LOCAL_ATHLETES_KEY, INITIAL_ATHLETES);
-  const updated = [athlete, ...current];
+  const exists = current.some((a) => a.id === athlete.id);
+  const updated = exists
+    ? current.map((a) => (a.id === athlete.id ? athlete : a))
+    : [athlete, ...current];
   setLocalData(LOCAL_ATHLETES_KEY, updated);
 
   const db = getFirebaseDb();
@@ -265,6 +268,26 @@ export async function addAthleteItem(athlete: Athlete): Promise<void> {
     try {
       const docRef = doc(db, ATHLETES_COLLECTION, athlete.id);
       await setDoc(docRef, athlete, { merge: true });
+    } catch (e) {
+      console.warn('Firestore write failed, stored locally:', e);
+    }
+  }
+}
+
+// 7c. Add Coach
+export async function addCoachItem(coach: Coach): Promise<void> {
+  const current = getLocalData<Coach[]>(LOCAL_COACHES_KEY, INITIAL_COACHES);
+  const exists = current.some((c) => c.id === coach.id);
+  const updated = exists
+    ? current.map((c) => (c.id === coach.id ? coach : c))
+    : [coach, ...current];
+  setLocalData(LOCAL_COACHES_KEY, updated);
+
+  const db = getFirebaseDb();
+  if (db) {
+    try {
+      const docRef = doc(db, COACHES_COLLECTION, coach.id);
+      await setDoc(docRef, coach, { merge: true });
     } catch (e) {
       console.warn('Firestore write failed, stored locally:', e);
     }

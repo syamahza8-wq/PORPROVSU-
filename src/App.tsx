@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { RunningTicker } from './components/RunningTicker';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { MedalTable } from './components/MedalTable';
 import { AthletesCoachesSection } from './components/AthletesCoachesSection';
 import { MatchScheduleSection } from './components/MatchSchedule';
 import { SportsBranches } from './components/SportsBranches';
@@ -22,7 +21,6 @@ import {
   subscribeToNews,
   subscribeToAthletes,
   subscribeToCoaches,
-  addAthleteItem,
 } from './services/firestoreService';
 import { MedalStanding, MatchSchedule, NewsArticle, Athlete, Coach } from './types';
 import {
@@ -36,9 +34,7 @@ import {
 export const App: React.FC = () => {
   // 3-second Intro Loading State (Strictly 3s, no skip)
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // Developer notice modal state
   const [isNoticeOpen, setIsNoticeOpen] = useState<boolean>(false);
-  // Admin & Login state
   const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
   const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
 
@@ -91,12 +87,6 @@ export const App: React.FC = () => {
     setCurrentUser(null);
   };
 
-  const handleAddAthlete = async (athlete: Athlete) => {
-    await addAthleteItem(athlete);
-    // Ensure instant UI update even in local fallback mode
-    setAthletes((prev) => [athlete, ...prev.filter((item) => item.id !== athlete.id)]);
-  };
-
   const handleNavigate = (sectionId: string) => {
     setActiveSection(sectionId);
     if (sectionId === 'beranda') {
@@ -111,14 +101,14 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-brand-surface font-sans text-brand-dark antialiased">
+    <div className="min-h-screen flex flex-col bg-brand-surface font-sans text-brand-dark antialiased overflow-x-hidden">
       {/* 0. 3-Second Intro Loader: Strict 3 seconds, no skip */}
       {isLoading && <IntroLoader onComplete={handleIntroComplete} />}
 
       {/* 1. Running Ticker */}
       <RunningTicker schedules={schedules} />
 
-      {/* 2. Clean Sticky Header */}
+      {/* 2. Clean 2-Tier Sticky Header */}
       <Navbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
@@ -129,69 +119,56 @@ export const App: React.FC = () => {
         onLogout={handleLogout}
       />
 
-      {/* Main Content (Bright, Mobile-First, NO Kata Sambutan) */}
+      {/* Main Content */}
       <main className="flex-grow">
-        {/* 3. Bright Hero Section */}
         <div id="beranda">
           <Hero
-            topMedals={medals}
             athletesCount={athletes.length}
             coachesCount={coaches.length}
             onNavigate={handleNavigate}
           />
         </div>
 
-        {/* 4. Klasemen Medali 33 Kabupaten/Kota + Logo Daerah */}
-        <MedalTable medals={medals} />
-
-        {/* 5. Data Atlet, Pelatih, dan Medali Perseorangan */}
+        {/* Data Atlet & Pelatih (kosong secara default; hanya diisi lewat portal KONI Kab/Kota) */}
         <AthletesCoachesSection
           athletes={athletes}
           coaches={coaches}
           medals={medals}
         />
 
-        {/* 6. Lokasi Venue & Cabor Apa Saja */}
+        {/* Lokasi Venue Resmi porprovsumut.com & Cabor Apa Saja */}
         <VenuesSection />
 
-        {/* 7. Cabang Olahraga Resmi (28 Cabor) */}
+        {/* 30 Cabang Olahraga Resmi PORPROVSU XII */}
         <SportsBranches />
 
-        {/* 8. Jadwal & Hasil Pertandingan */}
+        {/* Jadwal & Skor Pertandingan */}
         <MatchScheduleSection schedules={schedules} />
 
-        {/* 9. 33 Kontingen Kabupaten & Kota */}
-        <ContingentsSection medals={medals} />
+        {/* 33 Kabupaten & Kota + Logo Daerah */}
+        <ContingentsSection medals={medals} athletes={athletes} />
 
-        {/* 10. Form Input & Login dengan Background Foto Kadis (Tanpa Kata Sambutan) */}
-        <OfficialFormSection
-          onAddAthlete={handleAddAthlete}
-          onLoginSuccess={(u) => setCurrentUser(u)}
-          currentUser={currentUser}
-        />
+        {/* Form Akses Portal KONI Kab/Kota dengan Background Foto Kadis */}
+        <OfficialFormSection athletes={athletes} />
 
-        {/* 11. Berita Terkini */}
+        {/* Berita & Informasi Resmi */}
         <NewsSection news={news} />
       </main>
 
-      {/* 12. Footer */}
       <Footer
         onNavigate={handleNavigate}
         onOpenAdmin={() => setIsAdminOpen(true)}
         onOpenLogin={() => setIsLoginOpen(true)}
       />
 
-      {/* 13. Mobile Bottom Navigation Bar */}
       <MobileBottomNav
         activeSection={activeSection}
         onNavigate={handleNavigate}
       />
 
-      {/* 14. Modals */}
       <AdminModal
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
-        medals={medals}
         schedules={schedules}
       />
 

@@ -6,7 +6,7 @@ import {
   Globe,
   ShieldCheck,
   ChevronRight,
-  LogIn
+  ExternalLink
 } from 'lucide-react';
 import { ASSETS } from '../assets';
 
@@ -16,11 +16,10 @@ interface FooterProps {
   onOpenLogin: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin, onOpenLogin }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin }) => {
   return (
     <footer className="bg-slate-100 text-slate-700 border-t border-slate-200 pt-14 pb-24 md:pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-10 border-b border-slate-200">
           {/* Brand & Emblem */}
           <div className="lg:col-span-5 space-y-4">
@@ -56,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin, onOpenL
             </div>
           </div>
 
-          {/* Quick Navigation (NO Kata Sambutan link) */}
+          {/* Quick Navigation */}
           <div className="lg:col-span-3 space-y-4">
             <h4 className="text-xs font-extrabold uppercase tracking-wider text-brand-dark border-l-2 border-brand-gold pl-2">
               Navigasi Halaman
@@ -69,27 +68,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin, onOpenL
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('klasemen')} className="hover:text-brand-royal flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>Klasemen Medali Kabupaten</span>
-                </button>
-              </li>
-              <li>
                 <button onClick={() => onNavigate('atlet-pelatih')} className="hover:text-brand-royal flex items-center gap-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
                   <span>Data Atlet & Pelatih</span>
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('jadwal')} className="hover:text-brand-royal flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>Jadwal & Hasil Pertandingan</span>
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('cabor')} className="hover:text-brand-royal flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>Cabang Olahraga (28 Cabor)</span>
                 </button>
               </li>
               <li>
@@ -99,9 +80,27 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin, onOpenL
                 </button>
               </li>
               <li>
+                <button onClick={() => onNavigate('cabor')} className="hover:text-brand-royal flex items-center gap-1.5">
+                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
+                  <span>28 Cabang Olahraga</span>
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('jadwal')} className="hover:text-brand-royal flex items-center gap-1.5">
+                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
+                  <span>Jadwal & Hasil Pertandingan</span>
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('kontingen')} className="hover:text-brand-royal flex items-center gap-1.5">
+                  <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
+                  <span>33 Kontingen Kab/Kota</span>
+                </button>
+              </li>
+              <li>
                 <button onClick={() => onNavigate('form-portal')} className="hover:text-brand-royal flex items-center gap-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>Form Input & Login Panitia</span>
+                  <span>Portal KONI Daerah</span>
                 </button>
               </li>
             </ul>
@@ -110,7 +109,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin, onOpenL
           {/* Sekretariat & Kontak */}
           <div className="lg:col-span-4 space-y-4">
             <h4 className="text-xs font-extrabold uppercase tracking-wider text-brand-dark border-l-2 border-brand-gold pl-2">
-              Sekretariat Panitia
+              Sekretariat & Akses KONI Daerah
             </h4>
 
             <div className="space-y-2.5 text-xs text-slate-600">
@@ -138,13 +137,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdmin, onOpenL
             </div>
 
             <div className="pt-2 flex flex-col gap-2">
-              <button
-                onClick={onOpenLogin}
-                className="w-full py-2.5 px-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-brand-dark font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-2xs"
+              <a
+                href="./koni-daerah/"
+                className="w-full py-2.5 px-3 rounded-xl bg-brand-gold hover:bg-brand-gold-dark text-white font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-2xs"
               >
-                <LogIn className="w-4 h-4 text-brand-royal" />
-                <span>Login Akun Panitia / Wasit</span>
-              </button>
+                <ShieldCheck className="w-4 h-4" />
+                <span>Masuk Portal Input KONI Kab/Kota</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
 
               <button
                 onClick={onOpenAdmin}

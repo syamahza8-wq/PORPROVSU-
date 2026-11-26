@@ -34,7 +34,7 @@ export const MatchScheduleSection: React.FC<MatchScheduleProps> = ({ schedules }
   }, [schedules, selectedCabor, selectedStatus]);
 
   return (
-    <section id="jadwal" className="py-16 sm:py-20 bg-white border-b border-slate-200">
+    <section id="jadwal" className="scroll-mt-36 py-14 sm:py-20 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

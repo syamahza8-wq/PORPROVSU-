@@ -1,29 +1,32 @@
 import React, { useState } from 'react';
-import { Users, Search } from 'lucide-react';
-import { MedalStanding } from '../types';
+import { Users, Search, ExternalLink } from 'lucide-react';
+import { MedalStanding, Athlete } from '../types';
 import { DistrictEmblem } from './DistrictEmblem';
 
 interface ContingentsSectionProps {
   medals: MedalStanding[];
+  athletes: Athlete[];
 }
 
-export const ContingentsSection: React.FC<ContingentsSectionProps> = ({ medals }) => {
+export const ContingentsSection: React.FC<ContingentsSectionProps> = ({
+  medals,
+  athletes,
+}) => {
   const [search, setSearch] = useState('');
 
   const contingents = medals.map((m) => {
-    const athletes = m.athletesTotal || Math.max(45, Math.min(380, m.total * 3 + 40));
-    const cabor = Math.max(6, Math.min(28, Math.floor(m.total / 5) + 6));
+    const regAthletes = athletes.filter(
+      (a) => a.contingent.toLowerCase() === m.contingent.toLowerCase()
+    );
+    const caborCount = new Set(regAthletes.map((a) => a.cabor)).size;
     return {
       id: m.id,
       name: m.contingent,
       code: m.regionCode,
       initials: m.emblemInitials || m.regionCode,
       badgeBg: m.badgeBg,
-      rank: m.rank,
-      totalMedals: m.total,
-      gold: m.gold,
-      athletes,
-      cabor,
+      athletesCount: regAthletes.length,
+      caborCount,
     };
   });
 
@@ -34,10 +37,12 @@ export const ContingentsSection: React.FC<ContingentsSectionProps> = ({ medals }
   );
 
   return (
-    <section id="kontingen" className="py-14 sm:py-20 bg-slate-50 border-b border-slate-200">
+    <section
+      id="kontingen"
+      className="scroll-mt-36 py-14 sm:py-20 bg-slate-50 border-b border-slate-200"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-brand-royal text-xs font-bold uppercase tracking-wider mb-2 shadow-2xs">
               <Users className="w-3.5 h-3.5 text-brand-gold" />
@@ -47,7 +52,7 @@ export const ContingentsSection: React.FC<ContingentsSectionProps> = ({ medals }
               33 Kontingen Kabupaten & Kota
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Logo daerah, jumlah atlet, cabang olahraga yang diikuti, serta total perolehan medali per kabupaten/kota.
+              Logo daerah seluruh peserta PORPROVSU XII Sumatera Utara. Masing-masing KONI dapat menginput atlet di portal KONI Daerah.
             </p>
           </div>
 
@@ -58,12 +63,11 @@ export const ContingentsSection: React.FC<ContingentsSectionProps> = ({ medals }
               placeholder="Cari kabupaten / kota..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-gold shadow-xs"
+              className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-gold shadow-2xs"
             />
           </div>
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filtered.map((item) => (
             <div
@@ -80,28 +84,29 @@ export const ContingentsSection: React.FC<ContingentsSectionProps> = ({ medals }
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-                      {item.code}
+                      KONI {item.code}
                     </span>
-                    <span className="text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">
-                      Rank #{item.rank}
-                    </span>
+                    <a
+                      href={`./koni-daerah/?kab=${encodeURIComponent(item.code)}`}
+                      className="text-[10px] font-bold text-brand-royal hover:text-brand-gold flex items-center gap-0.5"
+                      title={`Portal KONI ${item.name}`}
+                    >
+                      <span>Portal</span>
+                      <ExternalLink className="w-2.5 h-2.5" />
+                    </a>
                   </div>
                   <h3 className="font-bold text-sm text-slate-900 line-clamp-1">{item.name}</h3>
                 </div>
               </div>
 
-              <div className="pt-3 mt-3 border-t border-slate-100 grid grid-cols-3 gap-1.5 text-center text-xs">
+              <div className="pt-3 mt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-center text-xs">
                 <div className="bg-slate-50 p-1.5 rounded-lg">
-                  <span className="text-[10px] text-slate-400 block font-semibold">Atlet</span>
-                  <span className="font-bold text-slate-800">{item.athletes}</span>
+                  <span className="text-[10px] text-slate-400 block font-semibold">Atlet Terinput</span>
+                  <span className="font-bold text-slate-800">{item.athletesCount}</span>
                 </div>
                 <div className="bg-slate-50 p-1.5 rounded-lg">
-                  <span className="text-[10px] text-slate-400 block font-semibold">Cabor</span>
-                  <span className="font-bold text-slate-800">{item.cabor}</span>
-                </div>
-                <div className="bg-amber-50 p-1.5 rounded-lg border border-amber-200/70">
-                  <span className="text-[10px] text-amber-800 block font-semibold">Medali</span>
-                  <span className="font-black text-amber-900">{item.totalMedals}</span>
+                  <span className="text-[10px] text-slate-400 block font-semibold">Cabor Diikuti</span>
+                  <span className="font-bold text-slate-800">{item.caborCount}</span>
                 </div>
               </div>
             </div>
