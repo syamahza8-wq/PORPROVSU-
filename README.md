@@ -1,49 +1,33 @@
 # PORPROVSU XII SUMATERA UTARA 2026 - Official Web Portal
 
-Portal Resmi Pekan Olahraga Provinsi Sumatera Utara (PORPROVSU) yang dikembangkan dengan standar modern SaaS, responsif mobile/desktop, palet warna elegan bersumber dari logo resmi (tanpa gradasi neon), dan terintegrasi dengan database **Firebase (Firestore)** secara real-time.
+Portal Resmi Pekan Olahraga Provinsi Sumatera Utara (PORPROVSU) berbasis **React + TypeScript + Tailwind CSS + Firebase (Cloud Firestore)** tanpa PHP dan tanpa file `.bat`. Didesain dengan tampilan terang, rapi, responsif penuh (Desktop & Mobile App-style Navigation), serta warna resmi sesuai logo tanpa gradasi neon.
 
 ---
 
 ## 🌟 Fitur Utama
 
-1. **Brand & Visual Identity Resmi**:
-   - Menampilkan logo resmi PORPROVSU (`logo.jpeg` & `logo.png`).
-   - Foto resmi Kepala Dinas Pemuda dan Olahraga Provinsi Sumatera Utara (`kadis.jpeg`) digunakan sebagai backdrop heroik dengan sentuhan overlay gelap berwibawa tanpa gradasi neon.
-   - Sambutan resmi Kepala Dinas Pemuda dan Olahraga Sumut.
+1. **Tampilan Terang, Bersih & Responsif Penuh (Desktop + Mobile Bottom Navigation)**:
+   - Tema terang modern berbasis palet warna logo PORPROVSU (Navy `#1E3E62`, Gold `#D97706`, Maroon `#991B1B`, Slate/White).
+   - **Mobile Bottom Navigation Bar** untuk akses cepat di HP ke Beranda, Klasemen Medali, Data Atlet & Pelatih, Lokasi & Cabor, serta Form Portal.
 
-2. **Rekapitulasi Klasemen Medali Real-time**:
-   - Klasemen 33 Kabupaten & Kota se-Sumatera Utara (Medan, Deli Serdang, Binjai, Karo, Asahan, dll.).
-   - Filter cepat (Top 5, Top 10, Semua 33 Daerah) dan fitur pencarian nama daerah.
-   - Pengurutan dinamis berdasarkan Emas, Perak, Perunggu, atau Total medali.
-   - Ekspor data klasemen ke format CSV.
+2. **Klasemen Medali 33 Kabupaten & Kota + Logo Daerah**:
+   - Lengkap untuk seluruh 33 Kabupaten dan Kota se-Sumatera Utara dengan **perisai lambang/logo daerah** masing-masing.
+   - Dilengkapi filter Top 5, Top 10, Semua Daerah, sortir dinamis (Emas, Perak, Perunggu, Total), dan ekspor CSV.
 
-3. **Jadwal & Skor Pertandingan (Live Score)**:
-   - Status pertandingan interaktif: **LIVE**, **Selesai**, dan **Terjadwal**.
-   - Filter berdasarkan cabang olahraga dan status pertandingan.
-   - Detail arena venue dan catatan pertandingan.
+3. **Data Atlet, Data Pelatih & Medali Perseorangan**:
+   - Direktori interaktif untuk mencari dan memfilter atlet berdasarkan kabupaten/kota maupun cabor.
+   - Menampilkan rincian jumlah medali yang didapat tiap atlet (Emas, Perak, Perunggu), nomor pertandingan, prestasi/rekor, dan pelatih pendamping.
+   - Direktori pelatih dengan sertifikasi, jam terbang, dan perolehan medali atlet binaannya.
 
-4. **Cabang Olahraga & Lokasi Venue**:
-   - 28 Cabang Olahraga resmi (Beregu, Bela Diri, Individu, Akuatik, Akurasi) lengkap dengan kuota atlet dan medali.
-   - Peta dan petunjuk arah Google Maps untuk venue utama (Stadion Utama Sumut Batang Kuis, GOR Dispora, Gedung Serbaguna, dll.).
+4. **Lokasi Pertandingan & Cabang Olahraga (28 Cabor)**:
+   - Pemetaan lokasi venue (Stadion Utama Sumut Batang Kuis, GOR Mini Dispora, Kolam Renang Selayang, GOR PBSI, Gelanggang Remaja Medan, dll.) beserta cabor apa saja yang digelar di tiap arena dan tautan Google Maps.
 
-5. **33 Kontingen Daerah & Kabar Terkini**:
-   - Profil partisipasi seluruh kontingen kabupaten/kota di Sumatera Utara.
-   - Liputan berita, pengumuman resmi, dan press release dengan modal baca artikel.
+5. **Form Input & Login Panitia dengan Background Foto Kadis**:
+   - Foto Kepala Dinas (`kadis.jpeg`) digunakan sebagai latar belakang resmi pada formulir Portal & Modal Login Panitia (tanpa teks kata sambutan).
+   - Mendukung input langsung data atlet & perolehan medali ke Firebase Firestore.
 
-6. **Database Firebase (Firestore) & Admin Panel**:
-   - Service layer Firestore terintegrasi (`src/services/firestoreService.ts`).
-   - Fitur **1-Click Seed Data** untuk mengunggah dan menyinkronkan seluruh data Porprovsu ke Firestore.
-   - Panel admin untuk memperbarui medali dan skor pertandingan secara langsung dengan sinkronisasi real-time.
-   - Mode offline-first fallback sehingga aplikasi tetap berfungsi penuh jika kunci API belum dikonfigurasi.
-
----
-
-## 🚀 Teknologi yang Digunakan
-
-- **Framework**: React 18 + TypeScript + Vite
-- **Styling**: Tailwind CSS (Desain resmi bebas gradasi neon)
-- **Database Cloud**: Firebase v11 (Cloud Firestore)
-- **Icons**: Lucide React
+6. **Database Firebase (Cloud Firestore) Tanpa PHP**:
+   - Menggunakan Firebase v11 SDK dengan *real-time listener* (`onSnapshot`), mode offline-first fallback, serta panel admin untuk sinkronisasi 1-klik ke Firestore.
 
 ---
 

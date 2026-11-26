@@ -103,7 +103,7 @@ export const DeveloperNoticeModal: React.FC<DeveloperNoticeModalProps> = ({
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
                   <strong className="block text-slate-900 font-bold">Fitur Lengkap Porprovsu</strong>
-                  <span className="text-slate-600">33 Kontingen, 28 Cabor, Venue Maps, Berita, & Sambutan Kadis.</span>
+                  <span className="text-slate-600">33 Kab/Kota + Logo Daerah, 28 Cabor, Data Atlet & Pelatih, Lokasi Venue.</span>
                 </div>
               </div>
             </div>

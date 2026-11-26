@@ -11,7 +11,7 @@ import {
   Database,
   Code2,
   LogIn,
-  UserCheck,
+  Users,
   LogOut
 } from 'lucide-react';
 import { ASSETS } from '../assets';
@@ -39,11 +39,11 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks = [
     { id: 'beranda', label: 'Beranda' },
-    { id: 'sambutan', label: 'Sambutan Kadis' },
     { id: 'klasemen', label: 'Klasemen Medali' },
-    { id: 'jadwal', label: 'Jadwal & Hasil' },
-    { id: 'cabor', label: 'Cabang Olahraga' },
-    { id: 'venue', label: 'Venue' },
+    { id: 'atlet-pelatih', label: 'Atlet & Pelatih' },
+    { id: 'venue', label: 'Lokasi & Cabor' },
+    { id: 'jadwal', label: 'Jadwal & Skor' },
+    { id: 'form-portal', label: 'Form' },
     { id: 'berita', label: 'Berita' },
   ];
 
@@ -129,7 +129,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Center: Desktop Navigation Tabs (Clean, neat, organized) */}
+          {/* Center: Desktop Navigation Tabs */}
           <nav className="hidden xl:flex items-center space-x-1">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={link.id}
                   onClick={() => handleLinkClick(link.id)}
-                  className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-150 ${
+                  className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-150 ${
                     isActive 
                       ? 'bg-brand-royal text-white shadow-xs' 
                       : 'text-slate-700 hover:text-brand-royal hover:bg-slate-100'
@@ -151,8 +151,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right: Auth & Admin Actions */}
           <div className="hidden lg:flex items-center gap-2.5 shrink-0">
-            
-            {/* If user logged in */}
             {currentUser ? (
               <div className="flex items-center gap-2">
                 <button
@@ -172,7 +170,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                {/* Form Login Button */}
                 <button
                   onClick={onOpenLogin}
                   className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs shadow-xs hover:border-brand-royal transition-all active:scale-95"
@@ -181,17 +178,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span>Login Panitia</span>
                 </button>
 
-                {/* Direct Admin Access Button */}
                 <button
                   onClick={onOpenAdmin}
                   className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-royal hover:bg-brand-dark text-white font-bold text-xs shadow-xs transition-all active:scale-95"
                 >
                   <Database className="w-3.5 h-3.5 text-brand-gold-light" />
-                  <span>Database / CMS</span>
+                  <span>Database CMS</span>
                 </button>
               </div>
             )}
-
           </div>
 
           {/* Mobile Right Controls */}

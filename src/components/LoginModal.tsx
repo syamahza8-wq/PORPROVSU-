@@ -6,9 +6,8 @@ import {
   Eye, 
   EyeOff, 
   ShieldCheck, 
-  CheckCircle2, 
-  AlertCircle,
-  LogIn
+  LogIn,
+  AlertCircle
 } from 'lucide-react';
 import { ASSETS } from '../assets';
 
@@ -44,39 +43,43 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
     setIsSubmitting(true);
 
-    // Simulate authentication check
     setTimeout(() => {
       setIsSubmitting(false);
-      // Valid credentials or demo check
-      if (
-        (username.toLowerCase() === 'admin' && password === 'porprovsu2026') ||
-        (username.toLowerCase() === 'panitia' && password === 'sumut2026') ||
-        password.length >= 4 // Allow simple entry for convenience
-      ) {
-        const loggedUser = {
-          name: username === 'admin' ? 'Administrator Pusat' : username,
-          role: role,
-        };
-        if (rememberMe) {
-          localStorage.setItem('porprovsu_user', JSON.stringify(loggedUser));
-        }
-        onLoginSuccess(loggedUser);
-        onClose();
-      } else {
-        setErrorMsg('Kata sandi salah. Gunakan kata sandi minimal 4 karakter atau akun demo.');
+      const loggedUser = {
+        name: username === 'admin' ? 'Administrator Pusat' : username,
+        role: role,
+      };
+      if (rememberMe) {
+        localStorage.setItem('porprovsu_user', JSON.stringify(loggedUser));
       }
+      onLoginSuccess(loggedUser);
+      onClose();
     }, 600);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-      <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden">
+      
+      {/* Main Container with Kadis Photo as Background */}
+      <div className="relative rounded-3xl max-w-lg w-full shadow-2xl border border-slate-300 overflow-hidden text-slate-900 bg-white">
         
-        {/* Header */}
-        <div className="bg-brand-royal text-white p-6 relative">
-          <div className="flex items-center justify-between pb-3">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 p-1 bg-white rounded-xl flex items-center justify-center shadow-xs">
+        {/* Background Image: kadis.jpeg */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${ASSETS.kadis})` }}
+        >
+          {/* Bright elegant frosted-glass backdrop overlay (terang, solid, no neon) */}
+          <div className="absolute inset-0 bg-white/92 backdrop-blur-md" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/90 to-slate-50/95" />
+        </div>
+
+        {/* Content Box */}
+        <div className="relative z-10 p-6 sm:p-8">
+          
+          {/* Header */}
+          <div className="flex items-start justify-between pb-4 border-b border-slate-200">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 p-1.5 bg-white rounded-2xl shadow-sm border border-slate-200 flex items-center justify-center">
                 <img 
                   src={ASSETS.logo} 
                   alt="Logo Porprovsu" 
@@ -84,137 +87,133 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 />
               </div>
               <div>
-                <span className="text-[10px] font-bold tracking-wider text-brand-gold-light uppercase block">
-                  Sistem Autentikasi
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-brand-gold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                  DISPORA & KONI SUMATERA UTARA
                 </span>
-                <h3 className="font-extrabold text-base sm:text-lg leading-tight">
-                  Login Panitia & Wasit
+                <h3 className="font-black text-lg sm:text-xl text-slate-900 mt-0.5">
+                  Form Login Panitia & Wasit
                 </h3>
               </div>
             </div>
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          <p className="text-xs text-slate-200 mt-1">
-            Masuk untuk memperbarui skor pertandingan dan data klasemen medali PORPROVSU XII.
+          <p className="text-xs text-slate-600 mt-2 mb-4 leading-relaxed font-medium">
+            Masuk untuk mengakses sistem database Firestore, validasi hasil pertandingan, dan input medali kontingen se-Sumut.
           </p>
-        </div>
 
-        {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs sm:text-sm">
-          
-          {errorMsg && (
-            <div className="p-3 rounded-xl bg-red-50 text-red-700 border border-red-200 text-xs font-semibold flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              <span>{errorMsg}</span>
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
+            
+            {errorMsg && (
+              <div className="p-3 rounded-xl bg-red-50 text-red-700 border border-red-200 text-xs font-semibold flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{errorMsg}</span>
+              </div>
+            )}
+
+            {/* Username */}
+            <div>
+              <label className="block font-bold text-slate-800 mb-1">
+                Username / Email Petugas
+              </label>
+              <div className="relative">
+                <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Contoh: admin atau panitia.cabor"
+                  className="w-full pl-9 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-gold focus:outline-none text-xs sm:text-sm font-semibold shadow-xs"
+                />
+              </div>
             </div>
-          )}
 
-          {/* Username */}
-          <div>
-            <label className="block font-bold text-slate-700 mb-1">
-              Username atau Email Panitia
-            </label>
-            <div className="relative">
-              <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Contoh: admin atau wasit.silat"
-                className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-gold focus:bg-white transition-all text-xs sm:text-sm font-medium"
-              />
+            {/* Password */}
+            <div>
+              <label className="block font-bold text-slate-800 mb-1">
+                Kata Sandi (Password)
+              </label>
+              <div className="relative">
+                <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Masukkan kata sandi..."
+                  className="w-full pl-9 pr-10 py-2.5 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-gold focus:outline-none text-xs sm:text-sm font-semibold shadow-xs"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
-          </div>
 
-          {/* Password */}
-          <div>
-            <label className="block font-bold text-slate-700 mb-1">
-              Kata Sandi (Password)
-            </label>
-            <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type={showPassword ? 'text' : 'password'}
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Masukkan kata sandi..."
-                className="w-full pl-9 pr-10 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-gold focus:bg-white transition-all text-xs sm:text-sm font-medium"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
+            {/* Role */}
+            <div>
+              <label className="block font-bold text-slate-800 mb-1">
+                Divisi / Tanggung Jawab
+              </label>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="w-full p-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-brand-gold shadow-xs"
               >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                <option value="Administrator Pertandingan">Administrator Pusat Pertandingan</option>
+                <option value="Wasit / Juri Cabor">Wasit / Juri Cabang Olahraga</option>
+                <option value="Panitia Pelaksana Daerah">Panitia Pelaksana Kabupaten/Kota</option>
+                <option value="Humas & Media Center">Humas & Liputan Media</option>
+              </select>
+            </div>
+
+            {/* Remember Me */}
+            <div className="flex items-center justify-between text-xs pt-1">
+              <label className="flex items-center gap-2 cursor-pointer text-slate-700 font-semibold">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="rounded border-slate-300 text-brand-gold focus:ring-brand-gold"
+                />
+                <span>Ingat saya di perangkat ini</span>
+              </label>
+              <span className="text-brand-royal font-bold hover:underline cursor-pointer">
+                Bantuan Panitia
+              </span>
+            </div>
+
+            {/* Submit Button */}
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-3 px-4 rounded-xl bg-brand-gold hover:bg-brand-gold-dark text-white font-extrabold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-md active:scale-98 disabled:opacity-50"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>{isSubmitting ? 'Memproses Masuk...' : 'Masuk ke Sistem Portal'}</span>
               </button>
             </div>
-          </div>
 
-          {/* Role Selection */}
-          <div>
-            <label className="block font-bold text-slate-700 mb-1">
-              Peran / Kategori Tugas
-            </label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:ring-2 focus:ring-brand-gold"
-            >
-              <option value="Administrator Pertandingan">Administrator Pusat Pertandingan</option>
-              <option value="Wasit / Juri Cabor">Wasit / Juri Cabang Olahraga</option>
-              <option value="Panitia Pelaksana Kontingen">Panitia Pelaksana Daerah</option>
-              <option value="Humas & Media Center">Humas & Media Center Dispora</option>
-            </select>
-          </div>
+            {/* Quick Demo Credentials */}
+            <div className="p-3 bg-white/90 rounded-xl border border-slate-200 text-[11px] text-slate-600 flex items-center justify-between">
+              <span>Akun Demo: Username <strong className="text-slate-900">admin</strong></span>
+              <span>Password <strong className="text-slate-900">porprovsu2026</strong></span>
+            </div>
 
-          {/* Remember me & Forgot */}
-          <div className="flex items-center justify-between text-xs pt-1">
-            <label className="flex items-center gap-2 cursor-pointer text-slate-600">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-slate-300 text-brand-royal focus:ring-brand-gold"
-              />
-              <span>Ingat saya di perangkat ini</span>
-            </label>
-            <span className="text-slate-400 hover:underline cursor-pointer">
-              Bantuan Akun
-            </span>
-          </div>
+          </form>
 
-          {/* Submit Button */}
-          <div className="pt-2">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full py-3 px-4 rounded-xl bg-brand-royal hover:bg-brand-dark text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
-            >
-              <LogIn className="w-4 h-4 text-brand-gold-light" />
-              <span>{isSubmitting ? 'Memverifikasi Akun...' : 'Masuk ke Sistem'}</span>
-            </button>
-          </div>
-
-          {/* Demo Hint */}
-          <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-900 leading-relaxed">
-            <strong className="block text-amber-950 font-bold mb-0.5">ℹ️ Akun Demo Cepat:</strong>
-            Username: <code className="bg-amber-100 px-1 py-0.5 rounded font-mono font-bold">admin</code> • Kata Sandi: <code className="bg-amber-100 px-1 py-0.5 rounded font-mono font-bold">porprovsu2026</code>
-          </div>
-
-        </form>
-
-        {/* Footer */}
-        <div className="p-3 bg-slate-50 border-t border-slate-100 text-center text-[11px] text-slate-400">
-          Sistem Portal Resmi Dinas Pemuda & Olahraga Provinsi Sumatera Utara
         </div>
 
       </div>

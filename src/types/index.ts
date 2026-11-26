@@ -7,6 +7,10 @@ export interface MedalStanding {
   bronze: number;
   total: number;
   regionCode: string;
+  badgeBg?: string;
+  badgeColor?: string;
+  emblemInitials?: string;
+  athletesTotal?: number;
 }
 
 export type MatchStatus = 'UPCOMING' | 'LIVE' | 'COMPLETED';
@@ -16,7 +20,7 @@ export interface MatchSchedule {
   cabor: string;
   caborIcon?: string;
   category: string;
-  stage: string; // e.g. "Penyisihan", "Semifinal", "Final Perebutan Emas"
+  stage: string;
   teamA: string;
   teamB: string;
   scoreA?: number | string;
@@ -35,6 +39,7 @@ export interface SportBranch {
   category: 'Beregu' | 'Individu' | 'Bela Diri' | 'Akuatik' | 'Akurasi';
   icon: string;
   venue: string;
+  locationCity: string;
   athletesCount: number;
   goldMedalsCount: number;
   description: string;
@@ -63,12 +68,34 @@ export interface Venue {
   mapUrl?: string;
 }
 
-export interface Contingent {
+export interface Athlete {
   id: string;
   name: string;
-  shortName: string;
-  leadOfficial: string;
-  athletesTotal: number;
-  caborFollowed: number;
-  flagUrl?: string;
+  gender: 'Putra' | 'Putri';
+  contingent: string; // Kabupaten / Kota
+  cabor: string;
+  eventNumber: string; // Nomor Pertandingan
+  medals: {
+    gold: number;
+    silver: number;
+    bronze: number;
+    total: number;
+  };
+  achievements: string;
+  coachName: string;
+}
+
+export interface Coach {
+  id: string;
+  name: string;
+  cabor: string;
+  contingent: string; // Kabupaten / Kota
+  certification: string;
+  experienceYears: number;
+  athletesTrained: number;
+  medalsProduced: {
+    gold: number;
+    silver: number;
+    bronze: number;
+  };
 }

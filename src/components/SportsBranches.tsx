@@ -111,9 +111,11 @@ export const SportsBranches: React.FC = () => {
               </div>
 
               <div className="pt-4 mt-4 border-t border-slate-100 space-y-2 text-xs text-slate-600">
-                <div className="flex items-center gap-1.5 text-slate-500">
-                  <MapPin className="w-3.5 h-3.5 text-brand-gold shrink-0" />
-                  <span className="truncate">{c.venue}</span>
+                <div className="flex items-start gap-1.5 text-slate-600">
+                  <MapPin className="w-3.5 h-3.5 text-brand-gold shrink-0 mt-0.5" />
+                  <span className="line-clamp-2">
+                    <strong className="text-brand-royal">{c.locationCity}:</strong> {c.venue}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between font-semibold text-slate-700">
                   <span className="flex items-center gap-1">
