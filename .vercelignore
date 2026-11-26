@@ -1,0 +1,6 @@
+node_modules
+dist
+koni-daerah/dist
+koni-daerah/node_modules
+.git
+.playwright-mcp
